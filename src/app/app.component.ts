@@ -47,6 +47,7 @@ export class AppComponent {
     municipio: ['', Validators.required],
     colonia: ['', Validators.required],
     calle: ['', Validators.required],
+    numero: ['', Validators.required],
   });
   fourthFormGroup = this._formBuilder.group({
     nombre: ['', Validators.required],
@@ -57,8 +58,10 @@ export class AppComponent {
     numeroCasa: ['', Validators.required],
     email: ['', Validators.required],
   });
+
   fifthFormGroup = this._formBuilder.group({
-    fifthCtrl: ['', Validators.required],
+    disciplina: ['', Validators.required],
+    plan: ['', Validators.required],    
   });
 
   isEditable = false;
@@ -76,6 +79,15 @@ export class AppComponent {
     // console.log(this.filter());
   }
 
+  datos(){
+    
+    console.log(this.firstFormGroup.value);
+    console.log(this.secondFormGroup.value);
+    console.log(this.thirdFormGroup.value);
+    console.log(this.fourthFormGroup.value);
+    console.log(this.fifthFormGroup.value);
+
+  }
   codigosPostalesLista(cp: string) {
     if (cp.length == 5) {
       this._codigoPostal.codigoPostal(cp).subscribe((codigoPostal) => {

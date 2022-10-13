@@ -1,9 +1,9 @@
 <!-- <router-outlet></router-outlet> -->
 <!-- <div *ngIf="this.usuario.user"> -->
-  <!-- <button mat-icon-button>
+<!-- <button mat-icon-button>
     <mat-icon matBadge="15" matBadgeColor="warn">shopping_cart</mat-icon>
   </button> -->
-  <!-- <button
+<!-- <button
     mat-button
     aria-label="Example icon-button with a menu"
     [matMenuTriggerFor]="menuUser"
@@ -28,8 +28,8 @@
           />
         </svg>
       </mat-icon> -->
-      <!-- <mat-icon inline="true">account_circle</mat-icon> -->
-    <!-- </button>
+<!-- <mat-icon inline="true">account_circle</mat-icon> -->
+<!-- </button>
   </div>
 </div> -->
 
@@ -50,8 +50,10 @@
           <input
             matInput
             placeholder="Nombre"
-            formControlName="nombre"
+            formControlName="nombre"            
             required
+            #input
+            (input)="input.value=$any($event).target.value.toUpperCase()"
           />
         </mat-form-field>
         <mat-form-field appearance="outline">
@@ -285,6 +287,16 @@
           />
         </mat-form-field>
 
+        <mat-form-field appearance="outline">
+          <mat-label>Nùmero</mat-label>
+          <input
+            matInput
+            placeholder="numero"
+            formControlName="numero"
+            required
+          />
+        </mat-form-field>
+
         <div>
           <button mat-button matStepperPrevious>Back</button>
           <button mat-button matStepperNext>Next</button>
@@ -376,14 +388,12 @@
 
     <mat-step [stepControl]="fifthFormGroup">
       <form [formGroup]="fifthFormGroup">
-        <ng-template matStepLabel
-          >Datos de contacto en caso de emergencia</ng-template
-        >
+        <ng-template matStepLabel>Seleccione la disciplina</ng-template>
         <mat-form-field>
           <input
             matInput
             placeholder="Address"
-            formControlName="fifthCtrl"
+            formControlName="disciplina"
             required
           />
         </mat-form-field>
@@ -400,6 +410,8 @@
       <div>
         <button mat-button matStepperPrevious>Back</button>
         <button mat-button (click)="stepper.reset()">Reset</button>
+        <button mat-button (click)="datos()">Guardar</button>
+        
       </div>
     </mat-step>
   </mat-vertical-stepper>
