@@ -3,7 +3,11 @@
   <!-- <button mat-icon-button>
     <mat-icon matBadge="15" matBadgeColor="warn">shopping_cart</mat-icon>
   </button> -->
-  <button mat-button aria-label="Example icon-button with a menu" [matMenuTriggerFor]="menuUser">
+  <button
+    mat-button
+    aria-label="Example icon-button with a menu"
+    [matMenuTriggerFor]="menuUser"
+  >
     {{ this.usuario.user.firstName }}
     <mat-icon>more_vert</mat-icon>
     <mat-menu #menuUser="matMenu">
@@ -14,14 +18,14 @@
   </button>
 </div>
 
-
 <div class="container" *ngIf="!this.usuario.user">
   <div>
     <button mat-button (click)="this.usuario.signInWithGoogle()">
       <mat-icon>
         <svg xmlns="http://www.w3.org/2000/svg">
           <path
-            d="M22,12c0-5.52-4.48-10-10-10S2,6.48,2,12c0,4.84,3.44,8.87,8,9.8V15H8v-3h2V9.5C10,7.57,11.57,6,13.5,6H16v3h-2 c-0.55,0-1,0.45-1,1v2h3v3h-3v6.95C18.05,21.45,22,17.19,22,12z" />
+            d="M22,12c0-5.52-4.48-10-10-10S2,6.48,2,12c0,4.84,3.44,8.87,8,9.8V15H8v-3h2V9.5C10,7.57,11.57,6,13.5,6H16v3h-2 c-0.55,0-1,0.45-1,1v2h3v3h-3v6.95C18.05,21.45,22,17.19,22,12z"
+          />
         </svg>
       </mat-icon>
       <!-- <mat-icon inline="true">account_circle</mat-icon> -->
@@ -29,12 +33,9 @@
   </div>
 </div>
 
-
-
-
 <div class="container" *ngIf="this.usuario.user">
   <div class="column">
-    <img [src]="this.usuario.user.photoUrl" alt="">
+    <img [src]="this.usuario.user.photoUrl" alt="" />
     <p>{{ this.usuario.user.name }}</p>
   </div>
 </div>
@@ -46,23 +47,47 @@
         <ng-template matStepLabel>Datos generales</ng-template>
         <mat-form-field appearance="outline">
           <mat-label>Nombre</mat-label>
-          <input matInput placeholder="Nombre" formControlName="nombre" required>
+          <input
+            matInput
+            placeholder="Nombre"
+            formControlName="nombre"
+            required
+          />
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Apellido Paterno</mat-label>
-          <input matInput placeholder="apellidoPaterno" formControlName="apellidoPaterno" required>
+          <input
+            matInput
+            placeholder="apellidoPaterno"
+            formControlName="apellidoPaterno"
+            required
+          />
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Apellido Materno</mat-label>
-          <input matInput placeholder="apellidoMaterno" formControlName="apellidoMaterno" required>
+          <input
+            matInput
+            placeholder="apellidoMaterno"
+            formControlName="apellidoMaterno"
+            required
+          />
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Fecha Nacimiento</mat-label>
-          <input matInput matInput [matDatepicker]="picker" formControlName="fechaNacimiento" required>
+          <input
+            matInput
+            matInput
+            [matDatepicker]="picker"
+            formControlName="fechaNacimiento"
+            required
+          />
           <mat-hint>MM/DD/YYYY</mat-hint>
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
 
@@ -76,7 +101,7 @@
 
         <mat-form-field appearance="outline">
           <mat-label>CURP</mat-label>
-          <input matInput placeholder="curp" formControlName="curp" required>
+          <input matInput placeholder="curp" formControlName="curp" required />
         </mat-form-field>
         <div>
           <button mat-button matStepperNext>Next</button>
@@ -89,23 +114,43 @@
         <ng-template matStepLabel>Datos Médicos</ng-template>
         <mat-form-field appearance="outline">
           <mat-label>Afiliación Médica</mat-label>
-          <input matInput placeholder="afiliacionMedica" formControlName="afiliacionMedica" required>
+          <input
+            matInput
+            placeholder="afiliacionMedica"
+            formControlName="afiliacionMedica"
+            required
+          />
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Alergias</mat-label>
-          <input matInput placeholder="alergias" formControlName="alergias" required>
+          <input
+            matInput
+            placeholder="alergias"
+            formControlName="alergias"
+            required
+          />
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Padecimientos</mat-label>
-          <input matInput placeholder="padecimientos" formControlName="padecimientos" required>
+          <input
+            matInput
+            placeholder="padecimientos"
+            formControlName="padecimientos"
+            required
+          />
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Estatura</mat-label>
-          <input matInput placeholder="estatura" formControlName="estatura" required>
+          <input
+            matInput
+            placeholder="estatura"
+            formControlName="estatura"
+            required
+          />
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Peso</mat-label>
-          <input matInput placeholder="peso" formControlName="peso" required>
+          <input matInput placeholder="peso" formControlName="peso" required />
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Tipo de sangre</mat-label>
@@ -130,42 +175,114 @@
 
         <mat-form-field appearance="outline">
           <mat-label>Número Celular</mat-label>
-          <input matInput placeholder="numeroCelular" formControlName="numeroCelular" required>
+          <input
+            matInput
+            placeholder="numeroCelular"
+            formControlName="numeroCelular"
+            required
+          />
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Número Casa</mat-label>
-          <input matInput placeholder="numeroCasa" formControlName="numeroCasa" required>
+          <input
+            matInput
+            placeholder="numeroCasa"
+            formControlName="numeroCasa"
+            required
+          />
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Email</mat-label>
-          <input matInput placeholder="email" formControlName="email" required>
+          <input
+            matInput
+            placeholder="email"
+            formControlName="email"
+            required
+          />
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>CP</mat-label>
-          <input matInput placeholder="cp" formControlName="cp" required>
+          <input
+            matInput
+            placeholder="cp"
+            formControlName="cp"
+            (keyup)="codigosPostalesLista($any($event).target.value)"
+            required
+          />
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Estado</mat-label>
-          <input matInput placeholder="estado" formControlName="estado" required>
+          <input
+            matInput
+            placeholder="estado"
+            formControlName="estado"
+            required
+          />
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Municipio</mat-label>
-          <input matInput placeholder="municipio" formControlName="municipio" required>
+          <input
+            matInput
+            placeholder="municipio"
+            formControlName="municipio"
+            required
+          />
         </mat-form-field>
 
-        <mat-form-field appearance="outline">
+        <!-- <mat-form-field appearance="outline">
           <mat-label>Colonia</mat-label>
           <input matInput placeholder="colonia" formControlName="colonia" required>
+        </mat-form-field> -->
+        <mat-form-field class="input-full-width" appearance="outline">
+          <mat-label>Colonia</mat-label>
+          <input
+            matInput
+            placeholder="Colonia"
+            value=""
+            [matAutocomplete]="auto"
+            formControlName="cp"
+            minlength="5"
+            formControlName="colonia"
+            (click)="codigosPostalesfilter($any($event).target.value)"
+            required
+          />
+          <button
+            *ngIf="this.thirdFormGroup.value.cp"
+            matSuffix
+            mat-icon-button
+            aria-label="Clear"
+            (click)="this.thirdFormGroup.controls['colonia'].setValue('')"
+          >
+            <mat-icon>close</mat-icon>
+          </button>
+
+          <mat-autocomplete
+            autoActiveFirstOption
+            #auto="matAutocomplete"
+            [displayWith]="codigosPostalesLocalidad.bind(this)"
+          >
+            <mat-option
+              *ngFor="let cp of catalogoCPFiltro"
+              [value]="cp.localidad"
+            >
+              {{ cp.localidad }}
+            </mat-option>
+          </mat-autocomplete>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Calle</mat-label>
-          <input matInput placeholder="calle" formControlName="calle" required>
+          <input
+            matInput
+            placeholder="calle"
+            formControlName="calle"
+            required
+          />
         </mat-form-field>
 
         <div>
@@ -177,42 +294,78 @@
 
     <mat-step [stepControl]="fourthFormGroup">
       <form [formGroup]="fourthFormGroup">
-        <ng-template matStepLabel>Datos de contacto en caso de emergencia</ng-template>
+        <ng-template matStepLabel
+          >Datos de contacto en caso de emergencia</ng-template
+        >
 
         <mat-form-field appearance="outline">
           <mat-label>Nombre</mat-label>
-          <input matInput placeholder="Nombre" formControlName="nombre" required>
+          <input
+            matInput
+            placeholder="Nombre"
+            formControlName="nombre"
+            required
+          />
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Apellido Paterno</mat-label>
-          <input matInput placeholder="apellidoPaterno" formControlName="apellidoPaterno" required>
+          <input
+            matInput
+            placeholder="apellidoPaterno"
+            formControlName="apellidoPaterno"
+            required
+          />
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Apellido Materno</mat-label>
-          <input matInput placeholder="apellidoMaterno" formControlName="apellidoMaterno" required>
+          <input
+            matInput
+            placeholder="apellidoMaterno"
+            formControlName="apellidoMaterno"
+            required
+          />
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Parentesco</mat-label>
-          <input matInput placeholder="parentesco" formControlName="parentesco" required>
+          <input
+            matInput
+            placeholder="parentesco"
+            formControlName="parentesco"
+            required
+          />
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Número Celular</mat-label>
-          <input matInput placeholder="numeroCelular" formControlName="numeroCelular" required>
+          <input
+            matInput
+            placeholder="numeroCelular"
+            formControlName="numeroCelular"
+            required
+          />
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Número Casa</mat-label>
-          <input matInput placeholder="numeroCasa" formControlName="numeroCasa" required>
+          <input
+            matInput
+            placeholder="numeroCasa"
+            formControlName="numeroCasa"
+            required
+          />
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Email</mat-label>
-          <input matInput placeholder="email" formControlName="email" required>
+          <input
+            matInput
+            placeholder="email"
+            formControlName="email"
+            required
+          />
         </mat-form-field>
-
 
         <div>
           <button mat-button matStepperPrevious>Back</button>
@@ -223,9 +376,16 @@
 
     <mat-step [stepControl]="fifthFormGroup">
       <form [formGroup]="fifthFormGroup">
-        <ng-template matStepLabel>Datos de contacto en caso de emergencia</ng-template>
+        <ng-template matStepLabel
+          >Datos de contacto en caso de emergencia</ng-template
+        >
         <mat-form-field>
-          <input matInput placeholder="Address" formControlName="fifthCtrl" required>
+          <input
+            matInput
+            placeholder="Address"
+            formControlName="fifthCtrl"
+            required
+          />
         </mat-form-field>
         <div>
           <button mat-button matStepperPrevious>Back</button>
