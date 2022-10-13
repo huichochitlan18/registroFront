@@ -1,9 +1,9 @@
 <!-- <router-outlet></router-outlet> -->
-<div *ngIf="this.usuario.user">
+<!-- <div *ngIf="this.usuario.user"> -->
   <!-- <button mat-icon-button>
     <mat-icon matBadge="15" matBadgeColor="warn">shopping_cart</mat-icon>
   </button> -->
-  <button
+  <!-- <button
     mat-button
     aria-label="Example icon-button with a menu"
     [matMenuTriggerFor]="menuUser"
@@ -16,9 +16,9 @@
       </button>
     </mat-menu>
   </button>
-</div>
+</div> -->
 
-<div class="container" *ngIf="!this.usuario.user">
+<!-- <div class="container" *ngIf="!this.usuario.user">
   <div>
     <button mat-button (click)="this.usuario.signInWithGoogle()">
       <mat-icon>
@@ -27,20 +27,20 @@
             d="M22,12c0-5.52-4.48-10-10-10S2,6.48,2,12c0,4.84,3.44,8.87,8,9.8V15H8v-3h2V9.5C10,7.57,11.57,6,13.5,6H16v3h-2 c-0.55,0-1,0.45-1,1v2h3v3h-3v6.95C18.05,21.45,22,17.19,22,12z"
           />
         </svg>
-      </mat-icon>
+      </mat-icon> -->
       <!-- <mat-icon inline="true">account_circle</mat-icon> -->
-    </button>
+    <!-- </button>
   </div>
-</div>
+</div> -->
 
-<div class="container" *ngIf="this.usuario.user">
+<!-- <div class="container" *ngIf="this.usuario.user">
   <div class="column">
     <img [src]="this.usuario.user.photoUrl" alt="" />
     <p>{{ this.usuario.user.name }}</p>
   </div>
-</div>
+</div> -->
 
-<div class="continer" *ngIf="this.usuario.user">
+<div class="continer">
   <mat-vertical-stepper [linear]="false" #stepper animationDuration="500">
     <mat-step [stepControl]="firstFormGroup">
       <form [formGroup]="firstFormGroup">

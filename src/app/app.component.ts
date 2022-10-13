@@ -14,13 +14,13 @@ export class AppComponent {
   catalogoCP: cp[] = [];
   catalogoCPFiltro: cp[] = [];
 
-  public get usuario(): UsuarioService {
-    return this._usuario;
-  }
+  // public get usuario(): UsuarioService {
+  //   return this._usuario;
+  // }
 
-  public set usuario(value: UsuarioService) {
-    this._usuario = value;
-  }
+  // public set usuario(value: UsuarioService) {
+  //   this._usuario = value;
+  // }
 
   firstFormGroup = this._formBuilder.group({
     nombre: ['', Validators.required],
@@ -64,7 +64,7 @@ export class AppComponent {
   isEditable = false;
 
   constructor(
-    private _usuario: UsuarioService,
+    // private _usuario: UsuarioService,
     private _formBuilder: FormBuilder,
     private _codigoPostal: CodigoPostal
   ) {}
