@@ -46,11 +46,21 @@
       <form [formGroup]="firstFormGroup">
         <ng-template matStepLabel>Datos generales</ng-template>
         <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input
+            matInput
+            placeholder="email"
+            formControlName="correo"
+            required
+          />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
           <mat-label>Nombre</mat-label>
           <input
             matInput
             placeholder="Nombre"
-            formControlName="nombre"            
+            formControlName="nombre"
             required
             #input
             (input)="input.value=$any($event).target.value.toUpperCase()"
@@ -95,9 +105,9 @@
 
         <mat-form-field appearance="outline">
           <mat-label>Sexo</mat-label>
-          <mat-select required>
-            <mat-option value="volvo">Hombre</mat-option>
-            <mat-option value="saab">Mujer</mat-option>
+          <mat-select formControlName="sexo" required>
+            <mat-option value="hombre">Hombre</mat-option>
+            <mat-option value="mujer">Mujer</mat-option>
           </mat-select>
         </mat-form-field>
 
@@ -156,7 +166,7 @@
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Tipo de sangre</mat-label>
-          <mat-select required>
+          <mat-select  formControlName="tipoSangre" required>
             <mat-option value="Tipo A">Tipo A</mat-option>
             <mat-option value="Tipo B">Tipo B</mat-option>
             <mat-option value="Tipo AB">Tipo AB</mat-option>
@@ -191,16 +201,6 @@
             matInput
             placeholder="numeroCasa"
             formControlName="numeroCasa"
-            required
-          />
-        </mat-form-field>
-
-        <mat-form-field appearance="outline">
-          <mat-label>Email</mat-label>
-          <input
-            matInput
-            placeholder="email"
-            formControlName="email"
             required
           />
         </mat-form-field>
@@ -374,7 +374,7 @@
           <input
             matInput
             placeholder="email"
-            formControlName="email"
+            formControlName="correo"
             required
           />
         </mat-form-field>
@@ -388,15 +388,94 @@
 
     <mat-step [stepControl]="fifthFormGroup">
       <form [formGroup]="fifthFormGroup">
+
         <ng-template matStepLabel>Seleccione la disciplina</ng-template>
-        <mat-form-field>
-          <input
-            matInput
-            placeholder="Address"
-            formControlName="disciplina"
-            required
-          />
+
+        <mat-form-field appearance="outline">
+          <mat-label>Disciplina</mat-label>
+          <mat-select formControlName="disciplina" required>
+            <mat-option value="1" select>Natación</mat-option>
+          </mat-select>
         </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Plan</mat-label>
+          <mat-select formControlName="plan" required>
+            <mat-option value="1" select>Natación</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Lunes</mat-label>
+          <mat-select matNativeControl  formControlName="lunes" >
+            <!-- <mat-option value="1" select>Natación</mat-option> -->
+            <mat-option *ngFor="let horario of horario" [value]="horario">
+              {{horario}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Martes</mat-label>
+          <mat-select matNativeControl  formControlName="martes" >
+            <!-- <mat-option value="1" select>Natación</mat-option> -->
+            <mat-option *ngFor="let horario of horario" [value]="horario">
+              {{horario}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Miércoles</mat-label>
+          <mat-select matNativeControl  formControlName="miercoles" >
+            <!-- <mat-option value="1" select>Natación</mat-option> -->
+            <mat-option *ngFor="let horario of horario" [value]="horario">
+              {{horario}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Jueves</mat-label>
+          <mat-select matNativeControl  formControlName="jueves" >
+            <!-- <mat-option value="1" select>Natación</mat-option> -->
+            <mat-option *ngFor="let horario of horario" [value]="horario">
+              {{horario}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Viernes</mat-label>
+          <mat-select matNativeControl  formControlName="viernes" >
+            <!-- <mat-option value="1" select>Natación</mat-option> -->
+            <mat-option *ngFor="let horario of horario" [value]="horario">
+              {{horario}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Sabado</mat-label>
+          <mat-select matNativeControl  formControlName="sabado" >
+            <!-- <mat-option value="1" select>Natación</mat-option> -->
+            <mat-option *ngFor="let horario of horario" [value]="horario">
+              {{horario}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Doming</mat-label>
+          <mat-select matNativeControl  formControlName="doming" >
+            <!-- <mat-option value="1" select>Natación</mat-option> -->
+            <mat-option *ngFor="let horario of horario" [value]="horario">
+              {{horario}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+
         <div>
           <button mat-button matStepperPrevious>Back</button>
           <button mat-button matStepperNext>Next</button>
@@ -411,7 +490,7 @@
         <button mat-button matStepperPrevious>Back</button>
         <button mat-button (click)="stepper.reset()">Reset</button>
         <button mat-button (click)="datos()">Guardar</button>
-        
+
       </div>
     </mat-step>
   </mat-vertical-stepper>

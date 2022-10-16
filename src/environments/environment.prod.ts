@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  baseUrl: 'https://toluca.center/cp/?cp='
+  baseUrl: 'https://api.toluca.center/cp/?cp='
 };

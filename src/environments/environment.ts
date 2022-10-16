@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'https://toluca.center/cp/?cp='
+  baseUrl: 'https://api.toluca.center/cp/?cp='
 };
 
 /*
