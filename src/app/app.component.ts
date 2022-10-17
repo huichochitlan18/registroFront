@@ -33,17 +33,17 @@ export class AppComponent {
   formJoin?:FormGroup;
 
   secondFormGroup = this._formBuilder.group({
-    afiliacionMedica: ['', Validators.required],
-    alergias: ['', Validators.required],
-    padecimientos: ['', Validators.required],
-    estatura: ['', Validators.required],
-    peso: ['', Validators.required],
-    tipoSangre: ['', Validators.required],
+    afiliacionMedica: ['ASDF', Validators.required],
+    alergias: ['ASDF', Validators.required],
+    padecimientos: ['ASDF', Validators.required],
+    estatura: ['234', Validators.required],
+    peso: ['234', Validators.required],
+    tipoSangre: ['ASDF', Validators.required],
   });
 
   thirdFormGroup = this._formBuilder.group({
-    numeroCelular: ['', Validators.required],
-    numeroCasa: ['', Validators.required],
+    numeroCelular: ['234', Validators.required],
+    numeroCasa: ['234', Validators.required],
     cp: ['', Validators.required],
     estado: ['', Validators.required],
     municipio: ['', Validators.required],
@@ -52,13 +52,13 @@ export class AppComponent {
     numero: ['', Validators.required],
   });
   fourthFormGroup = this._formBuilder.group({
-    nombre: ['', Validators.required],
-    apellidoPaterno: ['', Validators.required],
-    apellidoMaterno: ['', Validators.required],
-    parentesco: ['', Validators.required],
-    numeroCelular: ['', Validators.required],
-    numeroCasa: ['', Validators.required],
-    correo: ['', Validators.required],
+    nombre: ['JOSE', Validators.required],
+    apellidoPaterno: ['asd', Validators.required],
+    apellidoMaterno: ['asd', Validators.required],
+    parentesco: ['asd', Validators.required],
+    numeroCelular: ['asd', Validators.required],
+    numeroCasa: ['123', Validators.required],
+    correo: ['123', Validators.required],
   });
 
   fifthFormGroup = this._formBuilder.group({
@@ -75,7 +75,7 @@ export class AppComponent {
   });
 
   firstFormGroup = this._formBuilder.group({
-    correo: ['asdf', Validators.required],
+    correo: ['jose@jose.com', Validators.required],
     nombre: ['asdf', Validators.required],
     apellidoPaterno: ['asdf', Validators.required],
     apellidoMaterno: ['asdf', Validators.required],
