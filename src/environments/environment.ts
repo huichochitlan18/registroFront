@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'https://api.toluca.center/cp/?cp='
+  apiCp: 'https://api.toluca.center/cp/?cp=',
+  apiBackEnd: 'http://localhost:3000/api'
 };
 
 /*

@@ -8,11 +8,11 @@ import { cp } from '../interface/cp-interface';
   providedIn: 'root',
 })
 export class CodigoPostal {
-  private baseUrl: string = environment.baseUrl;
+  private apiCP: string = environment.apiCp;
 
   constructor(private http: HttpClient) {}
 
   codigoPostal(cp:string): Observable<cp[]> {
-    return this.http.get<cp[]>(`${this.baseUrl+cp}`);
+    return this.http.get<cp[]>(`${this.apiCP+cp}`);
   }
 }

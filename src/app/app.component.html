@@ -33,18 +33,29 @@
   </div>
 </div> -->
 
-<!-- <div class="container" *ngIf="this.usuario.user">
+<div class="container" *ngIf="this.usuario.user">
   <div class="column">
     <img [src]="this.usuario.user.photoUrl" alt="" />
     <p>{{ this.usuario.user.name }}</p>
   </div>
-</div> -->
+</div>
 
 <div class="continer">
   <mat-vertical-stepper [linear]="false" #stepper animationDuration="500">
     <mat-step [stepControl]="firstFormGroup">
       <form [formGroup]="firstFormGroup">
         <ng-template matStepLabel>Datos generales</ng-template>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Folio</mat-label>
+          <input
+            matInput
+            placeholder="folio"
+            formControlName="folio"
+            required
+          />
+        </mat-form-field>
+
         <mat-form-field appearance="outline">
           <mat-label>Email</mat-label>
           <input
@@ -63,7 +74,7 @@
             formControlName="nombre"
             required
             #input
-            (input)="input.value=$any($event).target.value.toUpperCase()"
+            (input)="input.value = $any($event).target.value.toUpperCase()"
           />
         </mat-form-field>
         <mat-form-field appearance="outline">
@@ -124,7 +135,20 @@
     <mat-step [stepControl]="secondFormGroup">
       <form [formGroup]="secondFormGroup">
         <ng-template matStepLabel>Datos Médicos</ng-template>
+
         <mat-form-field appearance="outline">
+          <mat-label>Afiliación Médica</mat-label>
+          <mat-select formControlName="afiliacionMedica" required>
+            <mat-option
+              *ngFor="let afiliacionMedica of catalogoAfiliacionMedica"
+              [value]="afiliacionMedica.id"
+            >
+              {{ afiliacionMedica.afiliacionMedica }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <!-- <mat-form-field appearance="outline">
           <mat-label>Afiliación Médica</mat-label>
           <input
             matInput
@@ -133,6 +157,7 @@
             required
           />
         </mat-form-field>
+         -->
         <mat-form-field appearance="outline">
           <mat-label>Alergias</mat-label>
           <input
@@ -166,11 +191,15 @@
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Tipo de sangre</mat-label>
-          <mat-select  formControlName="tipoSangre" required>
-            <mat-option value="Tipo A">Tipo A</mat-option>
-            <mat-option value="Tipo B">Tipo B</mat-option>
-            <mat-option value="Tipo AB">Tipo AB</mat-option>
-            <mat-option value="Tipo O">Tipo O</mat-option>
+          <mat-select formControlName="tipoSangre" required>
+            <mat-option value="O-">Tipo O-</mat-option>
+            <mat-option value="O+">Tipo O+</mat-option>
+            <mat-option value="A−">Tipo A−</mat-option>
+            <mat-option value="A+">Tipo A+</mat-option>
+            <mat-option value="B−">Tipo B−</mat-option>
+            <mat-option value="B+">Tipo B+</mat-option>
+            <mat-option value="AB-">Tipo AB-</mat-option>
+            <mat-option value="AB+">Tipo AB+</mat-option>
           </mat-select>
         </mat-form-field>
 
@@ -388,93 +417,101 @@
 
     <mat-step [stepControl]="fifthFormGroup">
       <form [formGroup]="fifthFormGroup">
-
         <ng-template matStepLabel>Seleccione la disciplina</ng-template>
 
         <mat-form-field appearance="outline">
           <mat-label>Disciplina</mat-label>
-          <mat-select formControlName="disciplina" required>
-            <mat-option value="1" select>Natación</mat-option>
+          <mat-select formControlName="disciplina" required (selectionChange)="listaPlan($any($event).value)">
+            <mat-option
+              *ngFor="let disciplina of catalogoDisciplina"
+              [value]="disciplina.id"
+            >
+              {{ disciplina.disciplina }}
+            </mat-option>
           </mat-select>
         </mat-form-field>
-
+       
         <mat-form-field appearance="outline">
           <mat-label>Plan</mat-label>
-          <mat-select formControlName="plan" required>
-            <mat-option value="1" select>Natación</mat-option>
+          <mat-select formControlName="plan" required (selectionChange)="test($any($event).value)">
+            <mat-option
+              *ngFor="let plan of catalogoDisciplinaPlan"
+              [value]="plan.id"
+            >
+              {{ plan.plan }}
+            </mat-option>
           </mat-select>
-        </mat-form-field>
+        </mat-form-field>      
 
         <mat-form-field appearance="outline">
           <mat-label>Lunes</mat-label>
-          <mat-select matNativeControl  formControlName="lunes" >
+          <mat-select matNativeControl formControlName="lunes">
             <!-- <mat-option value="1" select>Natación</mat-option> -->
             <mat-option *ngFor="let horario of horario" [value]="horario">
-              {{horario}}
+              {{ horario }}
             </mat-option>
           </mat-select>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Martes</mat-label>
-          <mat-select matNativeControl  formControlName="martes" >
+          <mat-select matNativeControl formControlName="martes">
             <!-- <mat-option value="1" select>Natación</mat-option> -->
             <mat-option *ngFor="let horario of horario" [value]="horario">
-              {{horario}}
+              {{ horario }}
             </mat-option>
           </mat-select>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Miércoles</mat-label>
-          <mat-select matNativeControl  formControlName="miercoles" >
+          <mat-select matNativeControl formControlName="miercoles">
             <!-- <mat-option value="1" select>Natación</mat-option> -->
             <mat-option *ngFor="let horario of horario" [value]="horario">
-              {{horario}}
+              {{ horario }}
             </mat-option>
           </mat-select>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Jueves</mat-label>
-          <mat-select matNativeControl  formControlName="jueves" >
+          <mat-select matNativeControl formControlName="jueves">
             <!-- <mat-option value="1" select>Natación</mat-option> -->
             <mat-option *ngFor="let horario of horario" [value]="horario">
-              {{horario}}
+              {{ horario }}
             </mat-option>
           </mat-select>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Viernes</mat-label>
-          <mat-select matNativeControl  formControlName="viernes" >
+          <mat-select matNativeControl formControlName="viernes">
             <!-- <mat-option value="1" select>Natación</mat-option> -->
             <mat-option *ngFor="let horario of horario" [value]="horario">
-              {{horario}}
+              {{ horario }}
             </mat-option>
           </mat-select>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Sabado</mat-label>
-          <mat-select matNativeControl  formControlName="sabado" >
+          <mat-select matNativeControl formControlName="sabado">
             <!-- <mat-option value="1" select>Natación</mat-option> -->
             <mat-option *ngFor="let horario of horario" [value]="horario">
-              {{horario}}
+              {{ horario }}
             </mat-option>
           </mat-select>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Doming</mat-label>
-          <mat-select matNativeControl  formControlName="doming" >
+          <mat-select matNativeControl formControlName="doming">
             <!-- <mat-option value="1" select>Natación</mat-option> -->
             <mat-option *ngFor="let horario of horario" [value]="horario">
-              {{horario}}
+              {{ horario }}
             </mat-option>
           </mat-select>
         </mat-form-field>
-
 
         <div>
           <button mat-button matStepperPrevious>Back</button>
@@ -490,7 +527,6 @@
         <button mat-button matStepperPrevious>Back</button>
         <button mat-button (click)="stepper.reset()">Reset</button>
         <button mat-button (click)="datos()">Guardar</button>
-
       </div>
     </mat-step>
   </mat-vertical-stepper>
