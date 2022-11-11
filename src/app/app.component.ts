@@ -1,5 +1,10 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, ViewChild } from '@angular/core';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { cp } from './interface/cp-interface';
 import { CodigoPostal } from './service/cp.service';
 import { UsuarioService } from './service/usuario.service';
@@ -10,6 +15,11 @@ import { catalogoAfiliacionMedica } from './interface/catalogo-afiliacionMedica'
 import { catalogoDisciplina } from './interface/catalogo-disciplina';
 import { catalogoDisciplinaPlan } from './interface/catalogo-disciplinaPlan';
 
+import { usuarioHorario } from './interface/usuario-horario';
+import { MatTable } from '@angular/material/table';
+
+import * as uuid from 'uuid';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -18,32 +28,90 @@ import { catalogoDisciplinaPlan } from './interface/catalogo-disciplinaPlan';
 export class AppComponent {
   title = 'inscripciones';
 
+  @ViewChild(MatTable) table!: MatTable<usuarioHorario>;
+
+  horarioPlan: usuarioHorario[] = [];
+
+  selected = 1;
+  horarioInscripcion: any = [];
+  
   catalogoAfiliacionMedica: catalogoAfiliacionMedica[] = [];
   catalogoDisciplina: catalogoDisciplina[] = [];
   catalogoDisciplinaPlan: catalogoDisciplinaPlan[] = [];
 
   catalogoCP: cp[] = [];
   catalogoCPFiltro: cp[] = [];
+
   horario = [
-    '9:00 - 10:00',
-    '10:00 - 11:00',
-    '11:00 - 12:00',
-    '12:00 - 13:00',
-    '13:00 - 14:00',
-    '14:00 - 15:00',
-    '15:00 - 16:00',
-    '16:00 - 17:00',
+    '7:00',
+    '8:00',
+    '9:00',
+    '10:00',
+    '11:00',
+    '12:00',
+    '13:00',
+    '14:00',
+    '15:00',
+    '16:00',
+    '17:00',
+    '18:00',
+    '19:00',
+    '20:00',
+    '21:00',
+    '22:00',
   ];
-  public get usuario(): UsuarioService {
-    return this._usuario;
-  }
 
-  public set usuario(value: UsuarioService) {
-    this._usuario = value;
-  }
-  formJoin?: FormGroup;
+  diasSemana = [
+    {
+      dia: 'lunes',
+      id: 1,
+    },
+    {
+      dia: 'martes',
+      id: 2,
+    },
+    {
+      dia: 'miercoles',
+      id: 3,
+    },
+    {
+      dia: 'jueves',
+      id: 4,
+    },
+    {
+      dia: 'viernes',
+      id: 5,
+    },
+    {
+      dia: 'sabado',
+      id: 6,
+    },
+    {
+      dia: 'domingo',
+      id: 7,
+    },
+  ];
 
-  secondFormGroup = this._formBuilder.group({
+//   public get usuario(): UsuarioService {
+//     return this._usuario;
+//   }
+// 
+//   public set usuario(value: UsuarioService) {
+//     this._usuario = value;
+  // }
+
+  usuarioFormGroup = this._formBuilder.group({
+    folio: ['123456', Validators.required],
+    correo: ['jose@jose.com', Validators.required],
+    nombre: ['jose', Validators.required],
+    apellidoPaterno: ['gonzalez', Validators.required],
+    apellidoMaterno: ['gonzalez', Validators.required],
+    fechaNacimiento: [new Date(), Validators.required],
+    sexo: ['', Validators.required],
+    curp: ['asdfasdfasdf', Validators.required],
+  });
+
+  datosMedicosFormGroup = this._formBuilder.group({
     afiliacionMedica: ['', Validators.required],
     alergias: ['asdfasdf', Validators.required],
     padecimientos: ['asdfasdf', Validators.required],
@@ -52,7 +120,7 @@ export class AppComponent {
     tipoSangre: ['', Validators.required],
   });
 
-  thirdFormGroup = this._formBuilder.group({
+  datosContactoFormGroup = this._formBuilder.group({
     numeroCelular: ['123456789', Validators.required],
     numeroCasa: ['123456789', Validators.required],
     cp: ['', Validators.required],
@@ -62,7 +130,8 @@ export class AppComponent {
     calle: ['independencia', Validators.required],
     numero: ['', Validators.required],
   });
-  fourthFormGroup = this._formBuilder.group({
+
+  datosContactoEmergenciaFormGroup = this._formBuilder.group({
     nombre: ['guadalupe', Validators.required],
     apellidoPaterno: ['guadalupe', Validators.required],
     apellidoMaterno: ['guadalupe', Validators.required],
@@ -72,32 +141,29 @@ export class AppComponent {
     correo: ['asdasd@asdasd.com', Validators.required],
   });
 
-  fifthFormGroup = this._formBuilder.group({
-    disciplina: ['1', Validators.required],
-    plan: ['1', Validators.required],
-    lunes: [''],
-    martes: [''],
-    miercoles: [''],
-    jueves: [''],
-    viernes: [''],
-    sabado: [''],
-    doming: [''],
+  horarioFormGroup = this._formBuilder.group({
+    disciplina: [1, Validators.required],
+    plan: [1, Validators.required],
+    dia: [1],
+    inicio: [''],
+    fin: [''],
   });
 
-  firstFormGroup = this._formBuilder.group({
-    folio: ['123456', Validators.required],
-    correo: ['jose@jose.com', Validators.required],
-    nombre: ['jose', Validators.required],
-    apellidoPaterno: ['gonzalez', Validators.required],
-    apellidoMaterno: ['gonzalez', Validators.required],
-    fechaNacimiento: ['', Validators.required],
-    sexo: ['', Validators.required],
-    curp: ['asdfasdfasdf', Validators.required],
-    datosMedicos: [this.secondFormGroup.value],
-    datosContacto: [this.thirdFormGroup.value],
-    datosContactoEmergencia: [this.fourthFormGroup.value],
-    horario: [this.fifthFormGroup.value],
+  datosFormGroup = this._formBuilder.group({
+    usuario: [this.usuarioFormGroup],
+    datosMedicos: [this.datosMedicosFormGroup.value],
+    datosContacto: [this.datosContactoFormGroup.value],
+    datosContactoEmergencia: [this.datosContactoEmergenciaFormGroup.value],
+    horario: [this._formBuilder.array([])],
   });
+
+  displayedColumns: string[] = [
+    'disciplina',
+    'plan',
+    'dia',
+    'inicio',
+    'acciones',
+  ];
 
   isEditable = false;
 
@@ -109,6 +175,8 @@ export class AppComponent {
     private _catalogos: Catalogos
   ) {}
   ngOnInit(): void {
+    console.log(this.diasSemana);
+
     // this.codigosPostalesLista();
     // this.listaFormaPago();
     // this.listaMetodoPago();
@@ -118,24 +186,52 @@ export class AppComponent {
     this.listaDisciplina();
   }
 
-  test(test:any){
-    console.log(test);
+  test(test: any) {
+    this.horarioPlan.push({
+      id: uuid.v4(),
+      disciplina: this.catalogoDisciplina.find(
+        (disciplia) =>
+          disciplia.id === this.horarioFormGroup.get('disciplina')?.value
+      )?.disciplina,
+      plan: this.catalogoDisciplinaPlan.find(
+        (plan) => plan.id === this.horarioFormGroup.get('plan')?.value
+      )?.plan,
+      dia: this.diasSemana.find(
+        (dia) => dia.id === this.horarioFormGroup.get('dia')?.value
+      )?.dia,
+      inicio: this.horarioFormGroup.get('inicio')?.value || undefined,
+      fin: this.horarioFormGroup.get('fin')?.value || undefined,
+    });
+
+    console.log(this.horarioPlan);
+    console.log(this.horarioFormGroup.value);
+
+    // this.datosFormGroup.get('horario')?.patchValue(this.horarioFormGroup.value);
+
+    this.table.renderRows();
   }
 
   datos() {
-    this.firstFormGroup
-      .get('datosMedicos')
-      ?.patchValue(this.secondFormGroup.value);
-    this.firstFormGroup
+    this.datosFormGroup.get('usuario')?.patchValue(this.usuarioFormGroup.value);
+
+    this.datosFormGroup
       .get('datosContacto')
-      ?.patchValue(this.thirdFormGroup.value);
-    this.firstFormGroup
+      ?.patchValue(this.datosContactoFormGroup.value);
+
+    this.datosFormGroup
+      .get('datosMedicos')
+      ?.patchValue(this.datosMedicosFormGroup.value);
+
+    this.datosFormGroup
       .get('datosContactoEmergencia')
-      ?.patchValue(this.fourthFormGroup.value);
-    this.firstFormGroup.get('horario')?.patchValue(this.fifthFormGroup.value);
-    console.log(this.firstFormGroup.value);
+      ?.patchValue(this.datosContactoEmergenciaFormGroup.value);
+
+    // this.datosFormGroup.get('horario')?.patchValue(this.horarioFormGroup.value);
+
+    console.log(this.datosFormGroup.value);
+
     this._usuarioRegistro
-      .registrar(this.firstFormGroup.value)
+      .registrar(this.datosFormGroup.value)
       .subscribe((respuesta: any) => {
         console.log(respuesta);
         if (respuesta.datosMedicos) {
@@ -147,17 +243,21 @@ export class AppComponent {
         }
       });
   }
+
   codigosPostalesLista(cp: string) {
     if (cp.length == 5) {
       this._codigoPostal.codigoPostal(cp).subscribe((codigoPostal) => {
         this.catalogoCP = codigoPostal;
-        this.thirdFormGroup
+
+        this.datosContactoFormGroup
           .get('estado')
           ?.patchValue(this.catalogoCP[0].estado);
-        this.thirdFormGroup
+
+        this.datosContactoFormGroup
           .get('municipio')
           ?.patchValue(this.catalogoCP[0].municipio);
-        this.thirdFormGroup.controls['colonia'].setValue('');
+
+        this.datosContactoFormGroup.controls['colonia'].setValue('');
         // this.thirdFormGroup.get('localidad')?.patchValue.();
         console.log(this.catalogoCP);
       });
@@ -209,6 +309,7 @@ export class AppComponent {
         },
       });
   }
+
   listaDisciplina() {
     this._catalogos
       .disciplina()
@@ -227,7 +328,8 @@ export class AppComponent {
         },
       });
   }
-  listaPlan(plan:number) {
+
+  listaPlan(plan: number) {
     this._catalogos
       .plan(plan)
       .pipe(
@@ -244,5 +346,20 @@ export class AppComponent {
           console.log(error);
         },
       });
+  }
+  eliminarClase(id: string) {
+    // console.log(id);
+
+    this.horarioPlan = this.horarioPlan.filter((horario) => horario.id !== id);
+    // console.log(this.horarioPlan);
+
+    this.horarioInscripcion = this.horarioPlan.map(({ id, ...rest }) => {
+      // console.log(rest);
+      return rest;
+    });
+
+    this.datosFormGroup.get('horario')?.patchValue(this.horarioInscripcion);
+    // console.log(this.horarioInscripcion);
+    this.table.renderRows();
   }
 }

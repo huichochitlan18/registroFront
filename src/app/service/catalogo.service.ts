@@ -20,8 +20,8 @@ export class Catalogos {
   disciplina(): Observable<catalogoDisciplina[]>{
     return this.http.get<catalogoDisciplina[]>(`${this.api}/disciplina`);
   }
-  plan(diciplina:number): Observable<catalogoDisciplinaPlan[]>{
-    return this.http.get<catalogoDisciplinaPlan[]>(`${this.api}/plan/${diciplina}`);
+  plan(idDisciplina:number): Observable<catalogoDisciplinaPlan[]>{
+    return this.http.get<catalogoDisciplinaPlan[]>(`${this.api}/plan/${idDisciplina}`);
   }
 //   codigoPostal(cp:string): Observable<cp[]> {
 //     return this.http.get<cp[]>(`${this.baseUrl+cp}`);

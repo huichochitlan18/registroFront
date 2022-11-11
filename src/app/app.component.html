@@ -33,17 +33,17 @@
   </div>
 </div> -->
 
-<div class="container" *ngIf="this.usuario.user">
+<!-- <div class="container" *ngIf="this.usuario.user">
   <div class="column">
     <img [src]="this.usuario.user.photoUrl" alt="" />
     <p>{{ this.usuario.user.name }}</p>
   </div>
-</div>
+</div> -->
 
 <div class="continer">
   <mat-vertical-stepper [linear]="false" #stepper animationDuration="500">
-    <mat-step [stepControl]="firstFormGroup">
-      <form [formGroup]="firstFormGroup">
+    <mat-step [stepControl]="usuarioFormGroup">
+      <form [formGroup]="usuarioFormGroup">
         <ng-template matStepLabel>Datos generales</ng-template>
 
         <mat-form-field appearance="outline">
@@ -132,8 +132,8 @@
       </form>
     </mat-step>
 
-    <mat-step [stepControl]="secondFormGroup">
-      <form [formGroup]="secondFormGroup">
+    <mat-step [stepControl]="datosMedicosFormGroup">
+      <form [formGroup]="datosMedicosFormGroup">
         <ng-template matStepLabel>Datos Médicos</ng-template>
 
         <mat-form-field appearance="outline">
@@ -192,7 +192,7 @@
         <mat-form-field appearance="outline">
           <mat-label>Tipo de sangre</mat-label>
           <mat-select formControlName="tipoSangre" required>
-            <mat-option value="O-">Tipo O-</mat-option>
+            <mat-option value="O-" selected>Tipo O-</mat-option>
             <mat-option value="O+">Tipo O+</mat-option>
             <mat-option value="A−">Tipo A−</mat-option>
             <mat-option value="A+">Tipo A+</mat-option>
@@ -210,8 +210,8 @@
       </form>
     </mat-step>
 
-    <mat-step [stepControl]="thirdFormGroup">
-      <form [formGroup]="thirdFormGroup">
+    <mat-step [stepControl]="datosContactoFormGroup">
+      <form [formGroup]="datosContactoFormGroup">
         <ng-template matStepLabel>Datos de contacto</ng-template>
 
         <mat-form-field appearance="outline">
@@ -283,11 +283,13 @@
             required
           />
           <button
-            *ngIf="this.thirdFormGroup.value.cp"
+            *ngIf="this.datosContactoFormGroup.value.cp"
             matSuffix
             mat-icon-button
             aria-label="Clear"
-            (click)="this.thirdFormGroup.controls['colonia'].setValue('')"
+            (click)="
+              this.datosContactoFormGroup.controls['colonia'].setValue('')
+            "
           >
             <mat-icon>close</mat-icon>
           </button>
@@ -333,8 +335,8 @@
       </form>
     </mat-step>
 
-    <mat-step [stepControl]="fourthFormGroup">
-      <form [formGroup]="fourthFormGroup">
+    <mat-step [stepControl]="datosContactoEmergenciaFormGroup">
+      <form [formGroup]="datosContactoEmergenciaFormGroup">
         <ng-template matStepLabel
           >Datos de contacto en caso de emergencia</ng-template
         >
@@ -415,13 +417,17 @@
       </form>
     </mat-step>
 
-    <mat-step [stepControl]="fifthFormGroup">
-      <form [formGroup]="fifthFormGroup">
+    <mat-step [stepControl]="horarioFormGroup">
+      <form [formGroup]="horarioFormGroup">
         <ng-template matStepLabel>Seleccione la disciplina</ng-template>
 
         <mat-form-field appearance="outline">
           <mat-label>Disciplina</mat-label>
-          <mat-select formControlName="disciplina" required (selectionChange)="listaPlan($any($event).value)">
+          <mat-select
+            formControlName="disciplina"
+            required
+            (selectionChange)="listaPlan($any($event).value)"
+          >
             <mat-option
               *ngFor="let disciplina of catalogoDisciplina"
               [value]="disciplina.id"
@@ -430,10 +436,11 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
-       
+
         <mat-form-field appearance="outline">
           <mat-label>Plan</mat-label>
-          <mat-select formControlName="plan" required (selectionChange)="test($any($event).value)">
+          <mat-select formControlName="plan" required>
+            <!-- (selectionChange)="test($any($event).value)" -->
             <mat-option
               *ngFor="let plan of catalogoDisciplinaPlan"
               [value]="plan.id"
@@ -441,11 +448,21 @@
               {{ plan.plan }}
             </mat-option>
           </mat-select>
-        </mat-form-field>      
+        </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Lunes</mat-label>
-          <mat-select matNativeControl formControlName="lunes">
+          <mat-label>Dia</mat-label>
+          <mat-select matNativeControl formControlName="dia">
+            <!-- <mat-option value="1" select>Natación</mat-option> -->
+            <mat-option *ngFor="let dia of diasSemana" [value]="dia.id">
+              {{ dia.dia }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Inicio</mat-label>
+          <mat-select matNativeControl formControlName="inicio">
             <!-- <mat-option value="1" select>Natación</mat-option> -->
             <mat-option *ngFor="let horario of horario" [value]="horario">
               {{ horario }}
@@ -454,8 +471,8 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Martes</mat-label>
-          <mat-select matNativeControl formControlName="martes">
+          <mat-label>Fin</mat-label>
+          <mat-select matNativeControl formControlName="fin">
             <!-- <mat-option value="1" select>Natación</mat-option> -->
             <mat-option *ngFor="let horario of horario" [value]="horario">
               {{ horario }}
@@ -463,59 +480,58 @@
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field appearance="outline">
-          <mat-label>Miércoles</mat-label>
-          <mat-select matNativeControl formControlName="miercoles">
-            <!-- <mat-option value="1" select>Natación</mat-option> -->
-            <mat-option *ngFor="let horario of horario" [value]="horario">
-              {{ horario }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+        <button mat-raised-button color="primary" (click)="test(1)">
+          Agregar
+        </button>
+        <div class="container">
+          <table mat-table [dataSource]="horarioPlan" class="mat-elevation-z8">
+            <!--- Note that these columns can be defined in any order.
+                  The actual rendered columns are set as a property on the row definition" -->
 
-        <mat-form-field appearance="outline">
-          <mat-label>Jueves</mat-label>
-          <mat-select matNativeControl formControlName="jueves">
-            <!-- <mat-option value="1" select>Natación</mat-option> -->
-            <mat-option *ngFor="let horario of horario" [value]="horario">
-              {{ horario }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+            <!-- Position Column -->
+            <ng-container matColumnDef="disciplina">
+              <th mat-header-cell *matHeaderCellDef>disciplina.</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.disciplina }}
+              </td>
+            </ng-container>
 
-        <mat-form-field appearance="outline">
-          <mat-label>Viernes</mat-label>
-          <mat-select matNativeControl formControlName="viernes">
-            <!-- <mat-option value="1" select>Natación</mat-option> -->
-            <mat-option *ngFor="let horario of horario" [value]="horario">
-              {{ horario }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+            <!-- Name Column -->
+            <ng-container matColumnDef="plan">
+              <th mat-header-cell *matHeaderCellDef>plan</th>
+              <td mat-cell *matCellDef="let element">{{ element.plan }}</td>
+            </ng-container>
 
-        <mat-form-field appearance="outline">
-          <mat-label>Sabado</mat-label>
-          <mat-select matNativeControl formControlName="sabado">
-            <!-- <mat-option value="1" select>Natación</mat-option> -->
-            <mat-option *ngFor="let horario of horario" [value]="horario">
-              {{ horario }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+            <!-- Weight Column -->
+            <ng-container matColumnDef="dia">
+              <th mat-header-cell *matHeaderCellDef>dia</th>
+              <td mat-cell *matCellDef="let element">{{ element.dia }}</td>
+            </ng-container>
 
-        <mat-form-field appearance="outline">
-          <mat-label>Doming</mat-label>
-          <mat-select matNativeControl formControlName="doming">
-            <!-- <mat-option value="1" select>Natación</mat-option> -->
-            <mat-option *ngFor="let horario of horario" [value]="horario">
-              {{ horario }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="inicio">
+              <th mat-header-cell *matHeaderCellDef>inicio</th>
+              <td mat-cell *matCellDef="let element">{{ element.inicio }}</td>
+            </ng-container>
 
-        <div>
-          <button mat-button matStepperPrevious>Back</button>
-          <button mat-button matStepperNext>Next</button>
+            <ng-container matColumnDef="acciones">
+              <th mat-header-cell *matHeaderCellDef>Eliminar</th>
+
+              <td mat-cell *matCellDef="let element">
+                <button
+                  mat-icon-button
+                  color="warn"
+                  aria-label="Elimina la clase de horario"
+                  (click)="eliminarClase(element.id)"
+                >
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          </table>
         </div>
       </form>
     </mat-step>
