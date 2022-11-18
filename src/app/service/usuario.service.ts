@@ -1,30 +1,22 @@
-import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
+import { cp } from '../interface/cp-interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UsuarioService {
+  private backEnd: string = environment.apiBackEnd;
 
-  user: SocialUser | undefined;
-  loggedIn: boolean | undefined;
+  constructor(private http: HttpClient) {}
 
-  constructor(private authService: SocialAuthService) {
-
-    this.authService.authState.subscribe((user) => {
-      this.user = user;
-      this.loggedIn = user != null;
-      console.log(user);
-    });
-
+  registrar(data:any): Observable<any> {
+    console.log(data);
+    return this.http.post<any>(`${this.backEnd}/usuarios`,data);
   }
-  signInWithGoogle(): void {
-    this.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
-  }
-  signInWithFB(): void {
-    this.authService.signIn(FacebookLoginProvider.PROVIDER_ID);
-  }
-  signOut(): void {
-    this.authService.signOut();
-  }
+  // descargarDocumento(): Observable<any>{
+  //   return this.http.get<any>(`${this.backEnd}/usuarios/documento` {responseType: 'blob'});
+  // }
 }

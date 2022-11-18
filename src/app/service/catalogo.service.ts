@@ -9,7 +9,7 @@ import { catalogoDisciplinaPlan } from '../interface/catalogo-disciplinaPlan';
 @Injectable({
   providedIn: 'root',
 })
-export class Catalogos {
+export class CatalogosService {
   private api: string = `${environment.apiBackEnd}/catalogos`;
 
   constructor(private http: HttpClient) {}

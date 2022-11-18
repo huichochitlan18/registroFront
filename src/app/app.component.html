@@ -47,16 +47,6 @@
         <ng-template matStepLabel>Datos generales</ng-template>
 
         <mat-form-field appearance="outline">
-          <mat-label>Folio</mat-label>
-          <input
-            matInput
-            placeholder="folio"
-            formControlName="folio"
-            required
-          />
-        </mat-form-field>
-
-        <mat-form-field appearance="outline">
           <mat-label>Email</mat-label>
           <input
             matInput
@@ -97,6 +87,26 @@
           />
         </mat-form-field>
 
+        <div>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step [stepControl]="usuarioInformacionPersonalFormGroup">
+      <form [formGroup]="usuarioInformacionPersonalFormGroup">
+        <ng-template matStepLabel>Datos Personales</ng-template>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Folio</mat-label>
+          <input
+            matInput
+            placeholder="folio"
+            formControlName="folio"
+            required
+          />
+        </mat-form-field>
+
         <mat-form-field appearance="outline">
           <mat-label>Fecha Nacimiento</mat-label>
           <input
@@ -113,7 +123,7 @@
           ></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
-
+        
         <mat-form-field appearance="outline">
           <mat-label>Sexo</mat-label>
           <mat-select formControlName="sexo" required>
@@ -192,14 +202,14 @@
         <mat-form-field appearance="outline">
           <mat-label>Tipo de sangre</mat-label>
           <mat-select formControlName="tipoSangre" required>
-            <mat-option value="O-" selected>Tipo O-</mat-option>
-            <mat-option value="O+">Tipo O+</mat-option>
-            <mat-option value="A−">Tipo A−</mat-option>
-            <mat-option value="A+">Tipo A+</mat-option>
-            <mat-option value="B−">Tipo B−</mat-option>
-            <mat-option value="B+">Tipo B+</mat-option>
-            <mat-option value="AB-">Tipo AB-</mat-option>
-            <mat-option value="AB+">Tipo AB+</mat-option>
+            <mat-option value="O-" selected>O-</mat-option>
+            <mat-option value="O+">O+</mat-option>
+            <mat-option value="A−">A−</mat-option>
+            <mat-option value="A+">A+</mat-option>
+            <mat-option value="B−">B−</mat-option>
+            <mat-option value="B+">B+</mat-option>
+            <mat-option value="AB-">AB-</mat-option>
+            <mat-option value="AB+">AB+</mat-option>
           </mat-select>
         </mat-form-field>
 
@@ -480,7 +490,7 @@
           </mat-select>
         </mat-form-field>
 
-        <button mat-raised-button color="primary" (click)="test(1)">
+        <button mat-raised-button color="primary" (click)="agregarATabla()">
           Agregar
         </button>
         <div class="container">
@@ -533,6 +543,11 @@
             <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
           </table>
         </div>
+
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext>Next</button>
+        </div>
       </form>
     </mat-step>
 
@@ -542,7 +557,7 @@
       <div>
         <button mat-button matStepperPrevious>Back</button>
         <button mat-button (click)="stepper.reset()">Reset</button>
-        <button mat-button (click)="datos()">Guardar</button>
+        <button mat-button (click)="crearUsuario()">Guardar</button>
       </div>
     </mat-step>
   </mat-vertical-stepper>

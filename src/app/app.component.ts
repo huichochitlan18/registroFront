@@ -1,15 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { cp } from './interface/cp-interface';
-import { CodigoPostal } from './service/cp.service';
-import { UsuarioService } from './service/usuario.service';
-import { UsuarioRegistro } from './service/usuario-registro.service';
-import { Catalogos } from './service/catalogo.service';
+
+import { CatalogosService } from './service/catalogo.service';
 import { catchError, EMPTY } from 'rxjs';
 import { catalogoAfiliacionMedica } from './interface/catalogo-afiliacionMedica';
 import { catalogoDisciplina } from './interface/catalogo-disciplina';
@@ -18,7 +11,13 @@ import { catalogoDisciplinaPlan } from './interface/catalogo-disciplinaPlan';
 import { usuarioHorario } from './interface/usuario-horario';
 import { MatTable } from '@angular/material/table';
 
-import * as uuid from 'uuid';
+import * as uuid from 'uuid';//solo para generar un id unico para poder eliminar los datos de la tabla del horario
+import { usuarioHorarioFormulario } from './interface/usuario-horario-formuilario';
+import { usuarioContactoEmergencia } from './interface/usuario-contacto-emergencia';
+import { MatStepper } from '@angular/material/stepper';
+import { UsuarioSocialNetworkService } from './service/usuario-social-network.service';
+import { CodigoPostalService } from './service/cp.service';
+import { UsuarioService } from './service/usuario.service';
 
 @Component({
   selector: 'app-root',
@@ -28,13 +27,23 @@ import * as uuid from 'uuid';
 export class AppComponent {
   title = 'inscripciones';
 
+  @ViewChild('stepper', { read: MatStepper }) stepper!: MatStepper;
+
   @ViewChild(MatTable) table!: MatTable<usuarioHorario>;
+  displayedColumns: string[] = [
+    'disciplina',
+    'plan',
+    'dia',
+    'inicio',
+    'acciones',
+  ];
 
-  horarioPlan: usuarioHorario[] = [];
+  horarioPlan: usuarioHorario[] = []; //para motrar los datos en la tabla de la vista
+  horarioPlanForm: usuarioHorarioFormulario[] = []; //los datos q se envian en el formulario
+  contacosEmergencia: usuarioContactoEmergencia[] = [];
 
-  selected = 1;
   horarioInscripcion: any = [];
-  
+
   catalogoAfiliacionMedica: catalogoAfiliacionMedica[] = [];
   catalogoDisciplina: catalogoDisciplina[] = [];
   catalogoDisciplinaPlan: catalogoDisciplinaPlan[] = [];
@@ -92,20 +101,27 @@ export class AppComponent {
     },
   ];
 
-//   public get usuario(): UsuarioService {
-//     return this._usuario;
-//   }
-// 
-//   public set usuario(value: UsuarioService) {
-//     this._usuario = value;
+  //   public get usuario(): UsuarioService {
+  //     return this._usuario;
+  //   }
+  //
+  //   public set usuario(value: UsuarioService) {
+  //     this._usuario = value;
   // }
 
   usuarioFormGroup = this._formBuilder.group({
-    folio: ['123456', Validators.required],
+    // folio: ['123456', Validators.required],
     correo: ['jose@jose.com', Validators.required],
     nombre: ['jose', Validators.required],
     apellidoPaterno: ['gonzalez', Validators.required],
     apellidoMaterno: ['gonzalez', Validators.required],
+    // fechaNacimiento: [new Date(), Validators.required],
+    // sexo: ['', Validators.required],
+    // curp: ['asdfasdfasdf', Validators.required],
+  });
+
+  usuarioInformacionPersonalFormGroup = this._formBuilder.group({
+    folio: ['123456', Validators.required],
     fechaNacimiento: [new Date(), Validators.required],
     sexo: ['', Validators.required],
     curp: ['asdfasdfasdf', Validators.required],
@@ -151,86 +167,104 @@ export class AppComponent {
 
   datosFormGroup = this._formBuilder.group({
     usuario: [this.usuarioFormGroup],
-    datosMedicos: [this.datosMedicosFormGroup.value],
-    datosContacto: [this.datosContactoFormGroup.value],
-    datosContactoEmergencia: [this.datosContactoEmergenciaFormGroup.value],
+    informacionPersonal: [this.usuarioInformacionPersonalFormGroup],
+    informacionMedica: [this.datosMedicosFormGroup.value],
+    informacionContacto: [this.datosContactoFormGroup.value],
+    informacionContactoEmergencia: [this._formBuilder.array([])],
     horario: [this._formBuilder.array([])],
   });
-
-  displayedColumns: string[] = [
-    'disciplina',
-    'plan',
-    'dia',
-    'inicio',
-    'acciones',
-  ];
 
   isEditable = false;
 
   constructor(
-    private _usuario: UsuarioService,
     private _formBuilder: FormBuilder,
-    private _codigoPostal: CodigoPostal,
-    private _usuarioRegistro: UsuarioRegistro,
-    private _catalogos: Catalogos
+    private _usuarioSocialNetworkService: UsuarioSocialNetworkService,
+    private _codigoPostalService: CodigoPostalService,
+    private _usuarioService: UsuarioService,
+    private _catalogosService: CatalogosService
   ) {}
   ngOnInit(): void {
-    console.log(this.diasSemana);
-
-    // this.codigosPostalesLista();
-    // this.listaFormaPago();
-    // this.listaMetodoPago();
-    // this.listaMoneda();
-    // console.log(this.filter());
     this.listaAfiliacionMedica();
     this.listaDisciplina();
   }
 
-  test(test: any) {
+  agregarATabla() {
     this.horarioPlan.push({
       id: uuid.v4(),
       disciplina: this.catalogoDisciplina.find(
         (disciplia) =>
           disciplia.id === this.horarioFormGroup.get('disciplina')?.value
       )?.disciplina,
+      disciplinaid: this.horarioFormGroup.get('disciplina')?.value || undefined,
       plan: this.catalogoDisciplinaPlan.find(
         (plan) => plan.id === this.horarioFormGroup.get('plan')?.value
       )?.plan,
+      planid: this.horarioFormGroup.get('plan')?.value || undefined,
       dia: this.diasSemana.find(
         (dia) => dia.id === this.horarioFormGroup.get('dia')?.value
       )?.dia,
+      diaid: this.horarioFormGroup.get('dia')?.value || undefined,
       inicio: this.horarioFormGroup.get('inicio')?.value || undefined,
       fin: this.horarioFormGroup.get('fin')?.value || undefined,
     });
 
-    console.log(this.horarioPlan);
-    console.log(this.horarioFormGroup.value);
-
-    // this.datosFormGroup.get('horario')?.patchValue(this.horarioFormGroup.value);
-
     this.table.renderRows();
   }
 
-  datos() {
+  crearUsuario() {
     this.datosFormGroup.get('usuario')?.patchValue(this.usuarioFormGroup.value);
 
     this.datosFormGroup
-      .get('datosContacto')
+      .get('informacionPersonal')
+      ?.patchValue(this.usuarioInformacionPersonalFormGroup.value);
+
+    this.datosFormGroup
+      .get('informacionContacto')
       ?.patchValue(this.datosContactoFormGroup.value);
 
     this.datosFormGroup
-      .get('datosMedicos')
+      .get('informacionMedica')
       ?.patchValue(this.datosMedicosFormGroup.value);
 
+    this.contacosEmergencia.push({
+      nombre:
+        this.datosContactoEmergenciaFormGroup.get('nombre')?.value || undefined,
+      apellidoPaterno:
+        this.datosContactoEmergenciaFormGroup.get('apellidoPaterno')?.value ||
+        undefined,
+      apellidoMaterno:
+        this.datosContactoEmergenciaFormGroup.get('apellidoMaterno')?.value ||
+        undefined,
+      parentesco:
+        this.datosContactoEmergenciaFormGroup.get('parentesco')?.value ||
+        undefined,
+      numeroCelular:
+        this.datosContactoEmergenciaFormGroup.get('numeroCelular')?.value ||
+        undefined,
+      numeroCasa:
+        this.datosContactoEmergenciaFormGroup.get('numeroCasa')?.value ||
+        undefined,
+      correo:
+        this.datosContactoEmergenciaFormGroup.get('correo')?.value || undefined,
+    });
+
+    this.horarioPlan.forEach((horario) => {
+      this.horarioPlanForm.push({
+        disciplina: horario.disciplinaid,
+        plan: horario.planid,
+        dia: horario.diaid,
+        inicio: horario.inicio,
+        fin: horario.fin,
+      });
+    });
+
     this.datosFormGroup
-      .get('datosContactoEmergencia')
-      ?.patchValue(this.datosContactoEmergenciaFormGroup.value);
+      .get('informacionContactoEmergencia')
+      ?.patchValue(this.contacosEmergencia);
 
-    // this.datosFormGroup.get('horario')?.patchValue(this.horarioFormGroup.value);
+    this.datosFormGroup.get('horario')?.patchValue(this.horarioPlanForm);
 
-    console.log(this.datosFormGroup.value);
-
-    this._usuarioRegistro
+    this._usuarioService
       .registrar(this.datosFormGroup.value)
       .subscribe((respuesta: any) => {
         console.log(respuesta);
@@ -242,11 +276,14 @@ export class AppComponent {
           // });
         }
       });
+    this.stepper.reset();
+    this.contacosEmergencia = [];
+    this.horarioPlanForm = [];
   }
 
   codigosPostalesLista(cp: string) {
     if (cp.length == 5) {
-      this._codigoPostal.codigoPostal(cp).subscribe((codigoPostal) => {
+      this._codigoPostalService.codigoPostal(cp).subscribe((codigoPostal) => {
         this.catalogoCP = codigoPostal;
 
         this.datosContactoFormGroup
@@ -265,9 +302,7 @@ export class AppComponent {
   }
 
   codigosPostalesLocalidad(localidad: string): string {
-    // console.log(cp+"asdfasdf");
-    // localidad = localidad.toLowerCase();
-    console.log(localidad);
+    // console.log(localidad);
     return this.catalogoCP.find((x) => x.localidad === localidad)?.localidad!;
   }
 
@@ -284,15 +319,10 @@ export class AppComponent {
     );
     // }
   }
-  // displayFn(value?: number) {
-  //   return value ? this.catalogoCPFiltro.find(x => x.cp === value).name : undefined;
-  // }
+  
   listaAfiliacionMedica() {
-    // this.catalogosService.tipoDeComprobante().subscribe((TipoDeComprobante) => {
-    //   this.catalogoTipoDeComprobante = TipoDeComprobante;
-    //  console.log(TipoDeComprobante);
-    // });
-    this._catalogos
+  
+    this._catalogosService
       .afiliacionMedica()
       .pipe(
         catchError(() => {
@@ -311,7 +341,7 @@ export class AppComponent {
   }
 
   listaDisciplina() {
-    this._catalogos
+    this._catalogosService
       .disciplina()
       .pipe(
         catchError(() => {
@@ -330,7 +360,7 @@ export class AppComponent {
   }
 
   listaPlan(plan: number) {
-    this._catalogos
+    this._catalogosService
       .plan(plan)
       .pipe(
         catchError(() => {

@@ -7,7 +7,7 @@ import { cp } from '../interface/cp-interface';
 @Injectable({
   providedIn: 'root',
 })
-export class CodigoPostal {
+export class CodigoPostalService {
   private apiCP: string = environment.apiCp;
 
   constructor(private http: HttpClient) {}
