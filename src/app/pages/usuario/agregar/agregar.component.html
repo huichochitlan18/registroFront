@@ -1,0 +1,565 @@
+<!-- <router-outlet></router-outlet> -->
+<!-- <div *ngIf="this.usuario.user"> -->
+<!-- <button mat-icon-button>
+    <mat-icon matBadge="15" matBadgeColor="warn">shopping_cart</mat-icon>
+  </button> -->
+<!-- <button
+    mat-button
+    aria-label="Example icon-button with a menu"
+    [matMenuTriggerFor]="menuUser"
+  >
+    {{ this.usuario.user.firstName }}
+    <mat-icon>more_vert</mat-icon>
+    <mat-menu #menuUser="matMenu">
+      <button mat-menu-item (click)="this.usuario.signOut()">
+        <span>Salir</span>
+      </button>
+    </mat-menu>
+  </button>
+</div> -->
+
+<!-- <div class="container" *ngIf="!this.usuario.user">
+  <div>
+    <button mat-button (click)="this.usuario.signInWithGoogle()">
+      <mat-icon>
+        <svg xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M22,12c0-5.52-4.48-10-10-10S2,6.48,2,12c0,4.84,3.44,8.87,8,9.8V15H8v-3h2V9.5C10,7.57,11.57,6,13.5,6H16v3h-2 c-0.55,0-1,0.45-1,1v2h3v3h-3v6.95C18.05,21.45,22,17.19,22,12z"
+          />
+        </svg>
+      </mat-icon> -->
+<!-- <mat-icon inline="true">account_circle</mat-icon> -->
+<!-- </button>
+  </div>
+</div> -->
+
+<!-- <div class="container" *ngIf="this.usuario.user">
+  <div class="column">
+    <img [src]="this.usuario.user.photoUrl" alt="" />
+    <p>{{ this.usuario.user.name }}</p>
+  </div>
+</div> -->
+
+<div class="continer">
+    <mat-vertical-stepper [linear]="false" #stepper animationDuration="500">
+      <mat-step [stepControl]="usuarioFormGroup">
+        <form [formGroup]="usuarioFormGroup">
+          <ng-template matStepLabel>Datos generales</ng-template>
+  
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input
+              matInput
+              placeholder="email"
+              formControlName="correo"
+              required
+            />
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline">
+            <mat-label>Nombre</mat-label>
+            <input
+              matInput
+              placeholder="Nombre"
+              formControlName="nombre"
+              required
+              #input
+              (input)="input.value = $any($event).target.value.toUpperCase()"
+            />
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Apellido Paterno</mat-label>
+            <input
+              matInput
+              placeholder="apellidoPaterno"
+              formControlName="apellidoPaterno"
+              required
+            />
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline">
+            <mat-label>Apellido Materno</mat-label>
+            <input
+              matInput
+              placeholder="apellidoMaterno"
+              formControlName="apellidoMaterno"
+              required
+            />
+          </mat-form-field>
+  
+          <div>
+            <button mat-button matStepperNext>Next</button>
+          </div>
+        </form>
+      </mat-step>
+  
+      <mat-step [stepControl]="usuarioInformacionPersonalFormGroup">
+        <form [formGroup]="usuarioInformacionPersonalFormGroup">
+          <ng-template matStepLabel>Datos Personales</ng-template>
+  
+          <mat-form-field appearance="outline">
+            <mat-label>Folio</mat-label>
+            <input
+              matInput
+              placeholder="folio"
+              formControlName="folio"
+              required
+            />
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline">
+            <mat-label>Fecha Nacimiento</mat-label>
+            <input
+              matInput
+              matInput
+              [matDatepicker]="picker"
+              formControlName="fechaNacimiento"
+              required
+            />
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline">
+            <mat-label>Sexo</mat-label>
+            <mat-select formControlName="sexo" required>
+              <mat-option value="hombre">Hombre</mat-option>
+              <mat-option value="mujer">Mujer</mat-option>
+            </mat-select>
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline">
+            <mat-label>CURP</mat-label>
+            <input matInput placeholder="curp" formControlName="curp" required />
+          </mat-form-field>
+          <div>
+            <button mat-button matStepperNext>Next</button>
+          </div>
+        </form>
+      </mat-step>
+  
+      <mat-step [stepControl]="datosMedicosFormGroup">
+        <form [formGroup]="datosMedicosFormGroup">
+          <ng-template matStepLabel>Datos Médicos</ng-template>
+  
+          <mat-form-field appearance="outline">
+            <mat-label>Afiliación Médica</mat-label>
+            <mat-select formControlName="afiliacionMedica" required>
+              <mat-option
+                *ngFor="let afiliacionMedica of catalogoAfiliacionMedica"
+                [value]="afiliacionMedica.id"
+              >
+                {{ afiliacionMedica.afiliacionMedica }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+  
+          <!-- <mat-form-field appearance="outline">
+            <mat-label>Afiliación Médica</mat-label>
+            <input
+              matInput
+              placeholder="afiliacionMedica"
+              formControlName="afiliacionMedica"
+              required
+            />
+          </mat-form-field>
+           -->
+          <mat-form-field appearance="outline">
+            <mat-label>Alergias</mat-label>
+            <input
+              matInput
+              placeholder="alergias"
+              formControlName="alergias"
+              required
+            />
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Padecimientos</mat-label>
+            <input
+              matInput
+              placeholder="padecimientos"
+              formControlName="padecimientos"
+              required
+            />
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Estatura</mat-label>
+            <input
+              matInput
+              placeholder="estatura"
+              formControlName="estatura"
+              required
+            />
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Peso</mat-label>
+            <input matInput placeholder="peso" formControlName="peso" required />
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Tipo de sangre</mat-label>
+            <mat-select formControlName="tipoSangre" required>
+              <mat-option value="O-" selected>O-</mat-option>
+              <mat-option value="O+">O+</mat-option>
+              <mat-option value="A−">A−</mat-option>
+              <mat-option value="A+">A+</mat-option>
+              <mat-option value="B−">B−</mat-option>
+              <mat-option value="B+">B+</mat-option>
+              <mat-option value="AB-">AB-</mat-option>
+              <mat-option value="AB+">AB+</mat-option>
+            </mat-select>
+          </mat-form-field>
+  
+          <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button matStepperNext>Next</button>
+          </div>
+        </form>
+      </mat-step>
+  
+      <mat-step [stepControl]="datosContactoFormGroup">
+        <form [formGroup]="datosContactoFormGroup">
+          <ng-template matStepLabel>Datos de contacto</ng-template>
+  
+          <mat-form-field appearance="outline">
+            <mat-label>Número Celular</mat-label>
+            <input
+              matInput
+              placeholder="numeroCelular"
+              formControlName="numeroCelular"
+              required
+            />
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline">
+            <mat-label>Número Casa</mat-label>
+            <input
+              matInput
+              placeholder="numeroCasa"
+              formControlName="numeroCasa"
+              required
+            />
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline">
+            <mat-label>CP</mat-label>
+            <input
+              matInput
+              placeholder="cp"
+              formControlName="cp"
+              (keyup)="codigosPostalesLista($any($event).target.value)"
+              required
+            />
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline">
+            <mat-label>Estado</mat-label>
+            <input
+              matInput
+              placeholder="estado"
+              formControlName="estado"
+              required
+            />
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline">
+            <mat-label>Municipio</mat-label>
+            <input
+              matInput
+              placeholder="municipio"
+              formControlName="municipio"
+              required
+            />
+          </mat-form-field>
+  
+          <!-- <mat-form-field appearance="outline">
+            <mat-label>Colonia</mat-label>
+            <input matInput placeholder="colonia" formControlName="colonia" required>
+          </mat-form-field> -->
+          <mat-form-field class="input-full-width" appearance="outline">
+            <mat-label>Colonia</mat-label>
+            <input
+              matInput
+              placeholder="Colonia"
+              value=""
+              [matAutocomplete]="auto"
+              formControlName="cp"
+              minlength="5"
+              formControlName="colonia"
+              (click)="codigosPostalesfilter($any($event).target.value)"
+              required
+            />
+            <button
+              *ngIf="this.datosContactoFormGroup.value.cp"
+              matSuffix
+              mat-icon-button
+              aria-label="Clear"
+              (click)="
+                this.datosContactoFormGroup.controls['colonia'].setValue('')
+              "
+            >
+              <mat-icon>close</mat-icon>
+            </button>
+  
+            <mat-autocomplete
+              autoActiveFirstOption
+              #auto="matAutocomplete"
+              [displayWith]="codigosPostalesLocalidad.bind(this)"
+            >
+              <mat-option
+                *ngFor="let cp of catalogoCPFiltro"
+                [value]="cp.localidad"
+              >
+                {{ cp.localidad }}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline">
+            <mat-label>Calle</mat-label>
+            <input
+              matInput
+              placeholder="calle"
+              formControlName="calle"
+              required
+            />
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline">
+            <mat-label>Nùmero</mat-label>
+            <input
+              matInput
+              placeholder="numero"
+              formControlName="numero"
+              required
+            />
+          </mat-form-field>
+  
+          <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button matStepperNext>Next</button>
+          </div>
+        </form>
+      </mat-step>
+  
+      <mat-step [stepControl]="datosContactoEmergenciaFormGroup">
+        <form [formGroup]="datosContactoEmergenciaFormGroup">
+          <ng-template matStepLabel
+            >Datos de contacto en caso de emergencia</ng-template
+          >
+  
+          <mat-form-field appearance="outline">
+            <mat-label>Nombre</mat-label>
+            <input
+              matInput
+              placeholder="Nombre"
+              formControlName="nombre"
+              required
+            />
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Apellido Paterno</mat-label>
+            <input
+              matInput
+              placeholder="apellidoPaterno"
+              formControlName="apellidoPaterno"
+              required
+            />
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline">
+            <mat-label>Apellido Materno</mat-label>
+            <input
+              matInput
+              placeholder="apellidoMaterno"
+              formControlName="apellidoMaterno"
+              required
+            />
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline">
+            <mat-label>Parentesco</mat-label>
+            <input
+              matInput
+              placeholder="parentesco"
+              formControlName="parentesco"
+              required
+            />
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline">
+            <mat-label>Número Celular</mat-label>
+            <input
+              matInput
+              placeholder="numeroCelular"
+              formControlName="numeroCelular"
+              required
+            />
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline">
+            <mat-label>Número Casa</mat-label>
+            <input
+              matInput
+              placeholder="numeroCasa"
+              formControlName="numeroCasa"
+              required
+            />
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input
+              matInput
+              placeholder="email"
+              formControlName="correo"
+              required
+            />
+          </mat-form-field>
+  
+          <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button matStepperNext>Next</button>
+          </div>
+        </form>
+      </mat-step>
+  
+      <mat-step [stepControl]="horarioFormGroup">
+        <form [formGroup]="horarioFormGroup">
+          <ng-template matStepLabel>Seleccione la disciplina</ng-template>
+  
+          <mat-form-field appearance="outline">
+            <mat-label>Disciplina</mat-label>
+            <mat-select
+              formControlName="disciplina"
+              required
+              (selectionChange)="listaPlan($any($event).value)"
+            >
+              <mat-option
+                *ngFor="let disciplina of catalogoDisciplina"
+                [value]="disciplina.id"
+              >
+                {{ disciplina.disciplina }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline">
+            <mat-label>Plan</mat-label>
+            <mat-select formControlName="plan" required>
+              <!-- (selectionChange)="test($any($event).value)" -->
+              <mat-option
+                *ngFor="let plan of catalogoDisciplinaPlan"
+                [value]="plan.id"
+              >
+                {{ plan.plan }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline">
+            <mat-label>Dia</mat-label>
+            <mat-select matNativeControl formControlName="dia">
+              <!-- <mat-option value="1" select>Natación</mat-option> -->
+              <mat-option *ngFor="let dia of diasSemana" [value]="dia.id">
+                {{ dia.dia }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline">
+            <mat-label>Inicio</mat-label>
+            <mat-select matNativeControl formControlName="inicio">
+              <!-- <mat-option value="1" select>Natación</mat-option> -->
+              <mat-option *ngFor="let horario of horario" [value]="horario">
+                {{ horario }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline">
+            <mat-label>Fin</mat-label>
+            <mat-select matNativeControl formControlName="fin">
+              <!-- <mat-option value="1" select>Natación</mat-option> -->
+              <mat-option *ngFor="let horario of horario" [value]="horario">
+                {{ horario }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+  
+          <button mat-raised-button color="primary" (click)="agregarATabla()">
+            Agregar
+          </button>
+          <div class="container">
+            <table mat-table [dataSource]="horarioPlan" class="mat-elevation-z8">
+              <!--- Note that these columns can be defined in any order.
+                    The actual rendered columns are set as a property on the row definition" -->
+  
+              <!-- Position Column -->
+              <ng-container matColumnDef="disciplina">
+                <th mat-header-cell *matHeaderCellDef>disciplina.</th>
+                <td mat-cell *matCellDef="let element">
+                  {{ element.disciplina }}
+                </td>
+              </ng-container>
+  
+              <!-- Name Column -->
+              <ng-container matColumnDef="plan">
+                <th mat-header-cell *matHeaderCellDef>plan</th>
+                <td mat-cell *matCellDef="let element">{{ element.plan }}</td>
+              </ng-container>
+  
+              <!-- Weight Column -->
+              <ng-container matColumnDef="dia">
+                <th mat-header-cell *matHeaderCellDef>dia</th>
+                <td mat-cell *matCellDef="let element">{{ element.dia }}</td>
+              </ng-container>
+  
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="inicio">
+                <th mat-header-cell *matHeaderCellDef>inicio</th>
+                <td mat-cell *matCellDef="let element">{{ element.inicio }}</td>
+              </ng-container>
+  
+              <ng-container matColumnDef="acciones">
+                <th mat-header-cell *matHeaderCellDef>Eliminar</th>
+  
+                <td mat-cell *matCellDef="let element">
+                  <button
+                    mat-icon-button
+                    color="warn"
+                    aria-label="Elimina la clase de horario"
+                    (click)="eliminarClase(element.id)"
+                  >
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </td>
+              </ng-container>
+  
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            </table>
+          </div>
+  
+          <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button matStepperNext>Next</button>
+          </div>
+        </form>
+      </mat-step>
+  
+      <mat-step>
+        <ng-template matStepLabel>Done</ng-template>
+        You are now done.
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button (click)="stepper.reset()">Reset</button>
+          <button mat-button (click)="crearUsuario()">Guardar</button>
+        </div>
+      </mat-step>
+    </mat-vertical-stepper>
+  </div>
+  

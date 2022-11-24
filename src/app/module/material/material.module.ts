@@ -91,13 +91,10 @@ const AllMaterialModules=[
 @NgModule({
   declarations: [],
   imports: [
-    CommonModule,
     AllMaterialModules,
-    BrowserAnimationsModule
   ],
   exports: [
     AllMaterialModules,
-    BrowserAnimationsModule
   ]
 })
 export class MaterialModule { }

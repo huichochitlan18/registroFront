@@ -10,6 +10,7 @@ import { catalogoDisciplinaPlan } from '../interface/catalogo-disciplinaPlan';
   providedIn: 'root',
 })
 export class CatalogosService {
+  
   private api: string = `${environment.apiBackEnd}/catalogos`;
 
   constructor(private http: HttpClient) {}

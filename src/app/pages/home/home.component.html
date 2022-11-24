@@ -1,0 +1,47 @@
+<mat-sidenav-container fullscreen>
+    <mat-sidenav #sidenav mode="over">
+        <mat-toolbar color="primary" class="mat-elevation-z6">
+            <span>menu</span>
+            <span class="spacer"></span>
+            <button mat-icon-button (click)="sidenav.toggle()">
+                <mat-icon>menu</mat-icon>
+            </button>
+        </mat-toolbar>
+
+        <app-menu [menu]="menu"></app-menu>
+
+        <!-- <mat-nav-list>
+            <a routerLink="./listado" mat-list-item>
+                <mat-icon mat-list-icon>label</mat-icon>
+                <span>Listado</span>
+            </a>
+        </mat-nav-list> -->
+
+    </mat-sidenav>
+
+    <mat-sidenav-container>
+        <mat-toolbar color="primary" class="position-fixed mat-elevation-z6">
+            <button mat-icon-button (click)="sidenav.toggle()">
+                <mat-icon>menu</mat-icon>
+            </button>
+            <span>test</span>
+            <span class="spacer"></span>
+            <button mat-button>
+                <mat-icon>account_circle</mat-icon>
+                <!-- <mat-icon inline="true">account_circle</mat-icon> -->
+
+                {{this._authService.usuario.nombre}}
+            </button>            
+            <!-- <a mat-icon-button>
+                Jose
+            </a>           -->
+            <!-- <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+                <mat-icon>favorite</mat-icon>
+            </button> -->
+            <!-- <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+                <mat-icon>share</mat-icon>
+            </button> -->
+        </mat-toolbar>
+        <router-outlet></router-outlet>
+    </mat-sidenav-container>
+</mat-sidenav-container>

@@ -14,7 +14,7 @@ export class UsuarioService {
 
   registrar(data:any): Observable<any> {
     console.log(data);
-    return this.http.post<any>(`${this.backEnd}/usuarios`,data);
+    return this.http.post<any>(`${this.backEnd}/usuarios/registrar-alumno`,data);
   }
   // descargarDocumento(): Observable<any>{
   //   return this.http.get<any>(`${this.backEnd}/usuarios/documento` {responseType: 'blob'});
