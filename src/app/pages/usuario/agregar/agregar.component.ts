@@ -271,7 +271,7 @@ export class AgregarComponent implements OnInit {
           // });
         }
       });
-    this.stepper.reset();
+    // this.stepper.reset();
     this.contacosEmergencia = [];
     this.horarioPlanForm = [];
   }

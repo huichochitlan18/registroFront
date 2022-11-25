@@ -5,7 +5,7 @@ import { AuthService } from '../../service/auth.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
   menu: Menu = [
@@ -13,15 +13,20 @@ export class HomeComponent implements OnInit {
       title: 'Dashboard',
       icon: 'home',
       link: './dashboard',
-      color: '#ff7f0e'
+      color: '#ff7f0e',
     },
     {
       title: 'Agregar alumno',
       icon: 'add',
       link: './agregar-alumno',
-      color: '#ff7f0e'
+      color: '#ff7f0e',
     },
-   
+    {
+      title: 'Lista de alumno',
+      icon: 'list',
+      link: './lista-alumnos',
+      color: '#ff7f0e',
+    },
     // {
     //   title: 'Statistics',
     //   icon: 'bar_chart',
@@ -43,10 +48,7 @@ export class HomeComponent implements OnInit {
     // }
   ];
 
-  constructor( public _authService: AuthService) { }
+  constructor(public _authService: AuthService) {}
 
-  ngOnInit(): void {
-
-  }
-
+  ngOnInit(): void {}
 }

@@ -1,5 +1,5 @@
 export interface usuarioHorario {
-  id: string;
+  id?: string;
   disciplina?: string;
   disciplinaid?: number;
   plan?: string;
@@ -8,4 +8,6 @@ export interface usuarioHorario {
   diaid?: number;
   inicio?: string;
   fin?: string;
+  precio?: number;
+  nombre?: string;
 }

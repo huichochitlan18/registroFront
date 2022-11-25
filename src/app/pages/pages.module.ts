@@ -8,9 +8,10 @@ import { MenuComponent } from './menu/menu.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { ListaComponent } from './usuario/lista/lista.component';
 
 @NgModule({
-  declarations: [HomeComponent, MenuComponent, AgregarComponent, DashboardComponent],
+  declarations: [HomeComponent, MenuComponent, AgregarComponent, DashboardComponent, ListaComponent],
   imports: [
     CommonModule,
     PagesRoutingModule,
