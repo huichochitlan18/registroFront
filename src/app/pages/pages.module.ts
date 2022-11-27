@@ -9,9 +9,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ListaComponent } from './usuario/lista/lista.component';
+import { UsuarioComponent } from './usuario/usuario/usuario.component';
 
 @NgModule({
-  declarations: [HomeComponent, MenuComponent, AgregarComponent, DashboardComponent, ListaComponent],
+  declarations: [HomeComponent, MenuComponent, AgregarComponent, DashboardComponent, ListaComponent, UsuarioComponent],
   imports: [
     CommonModule,
     PagesRoutingModule,

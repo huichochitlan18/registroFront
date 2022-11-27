@@ -45,7 +45,7 @@
       <mat-step [stepControl]="usuarioFormGroup">
         <form [formGroup]="usuarioFormGroup">
           <ng-template matStepLabel>Datos generales</ng-template>
-  
+
           <mat-form-field appearance="outline">
             <mat-label>Email</mat-label>
             <input
@@ -55,7 +55,7 @@
               required
             />
           </mat-form-field>
-  
+
           <mat-form-field appearance="outline">
             <mat-label>Nombre</mat-label>
             <input
@@ -76,7 +76,7 @@
               required
             />
           </mat-form-field>
-  
+
           <mat-form-field appearance="outline">
             <mat-label>Apellido Materno</mat-label>
             <input
@@ -86,17 +86,17 @@
               required
             />
           </mat-form-field>
-  
+
           <div>
             <button mat-button matStepperNext>Next</button>
           </div>
         </form>
       </mat-step>
-  
+
       <mat-step [stepControl]="usuarioInformacionPersonalFormGroup">
         <form [formGroup]="usuarioInformacionPersonalFormGroup">
           <ng-template matStepLabel>Datos Personales</ng-template>
-  
+
           <mat-form-field appearance="outline">
             <mat-label>Folio</mat-label>
             <input
@@ -106,11 +106,10 @@
               required
             />
           </mat-form-field>
-  
+
           <mat-form-field appearance="outline">
             <mat-label>Fecha Nacimiento</mat-label>
             <input
-              matInput
               matInput
               [matDatepicker]="picker"
               formControlName="fechaNacimiento"
@@ -123,7 +122,7 @@
             ></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
-  
+
           <mat-form-field appearance="outline">
             <mat-label>Sexo</mat-label>
             <mat-select formControlName="sexo" required>
@@ -131,7 +130,7 @@
               <mat-option value="mujer">Mujer</mat-option>
             </mat-select>
           </mat-form-field>
-  
+
           <mat-form-field appearance="outline">
             <mat-label>CURP</mat-label>
             <input matInput placeholder="curp" formControlName="curp" required />
@@ -141,11 +140,11 @@
           </div>
         </form>
       </mat-step>
-  
+
       <mat-step [stepControl]="datosMedicosFormGroup">
         <form [formGroup]="datosMedicosFormGroup">
           <ng-template matStepLabel>Datos Médicos</ng-template>
-  
+
           <mat-form-field appearance="outline">
             <mat-label>Afiliación Médica</mat-label>
             <mat-select formControlName="afiliacionMedica" required>
@@ -157,7 +156,7 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
-  
+
           <!-- <mat-form-field appearance="outline">
             <mat-label>Afiliación Médica</mat-label>
             <input
@@ -212,18 +211,18 @@
               <mat-option value="AB+">AB+</mat-option>
             </mat-select>
           </mat-form-field>
-  
+
           <div>
             <button mat-button matStepperPrevious>Back</button>
             <button mat-button matStepperNext>Next</button>
           </div>
         </form>
       </mat-step>
-  
+
       <mat-step [stepControl]="datosContactoFormGroup">
         <form [formGroup]="datosContactoFormGroup">
           <ng-template matStepLabel>Datos de contacto</ng-template>
-  
+
           <mat-form-field appearance="outline">
             <mat-label>Número Celular</mat-label>
             <input
@@ -233,7 +232,7 @@
               required
             />
           </mat-form-field>
-  
+
           <mat-form-field appearance="outline">
             <mat-label>Número Casa</mat-label>
             <input
@@ -243,7 +242,7 @@
               required
             />
           </mat-form-field>
-  
+
           <mat-form-field appearance="outline">
             <mat-label>CP</mat-label>
             <input
@@ -254,7 +253,7 @@
               required
             />
           </mat-form-field>
-  
+
           <mat-form-field appearance="outline">
             <mat-label>Estado</mat-label>
             <input
@@ -264,7 +263,7 @@
               required
             />
           </mat-form-field>
-  
+
           <mat-form-field appearance="outline">
             <mat-label>Municipio</mat-label>
             <input
@@ -274,7 +273,7 @@
               required
             />
           </mat-form-field>
-  
+
           <!-- <mat-form-field appearance="outline">
             <mat-label>Colonia</mat-label>
             <input matInput placeholder="colonia" formControlName="colonia" required>
@@ -303,7 +302,7 @@
             >
               <mat-icon>close</mat-icon>
             </button>
-  
+
             <mat-autocomplete
               autoActiveFirstOption
               #auto="matAutocomplete"
@@ -317,7 +316,7 @@
               </mat-option>
             </mat-autocomplete>
           </mat-form-field>
-  
+
           <mat-form-field appearance="outline">
             <mat-label>Calle</mat-label>
             <input
@@ -327,7 +326,7 @@
               required
             />
           </mat-form-field>
-  
+
           <mat-form-field appearance="outline">
             <mat-label>Nùmero</mat-label>
             <input
@@ -337,20 +336,20 @@
               required
             />
           </mat-form-field>
-  
+
           <div>
             <button mat-button matStepperPrevious>Back</button>
             <button mat-button matStepperNext>Next</button>
           </div>
         </form>
       </mat-step>
-  
+
       <mat-step [stepControl]="datosContactoEmergenciaFormGroup">
         <form [formGroup]="datosContactoEmergenciaFormGroup">
           <ng-template matStepLabel
             >Datos de contacto en caso de emergencia</ng-template
           >
-  
+
           <mat-form-field appearance="outline">
             <mat-label>Nombre</mat-label>
             <input
@@ -369,7 +368,7 @@
               required
             />
           </mat-form-field>
-  
+
           <mat-form-field appearance="outline">
             <mat-label>Apellido Materno</mat-label>
             <input
@@ -379,7 +378,7 @@
               required
             />
           </mat-form-field>
-  
+
           <mat-form-field appearance="outline">
             <mat-label>Parentesco</mat-label>
             <input
@@ -389,7 +388,7 @@
               required
             />
           </mat-form-field>
-  
+
           <mat-form-field appearance="outline">
             <mat-label>Número Celular</mat-label>
             <input
@@ -399,7 +398,7 @@
               required
             />
           </mat-form-field>
-  
+
           <mat-form-field appearance="outline">
             <mat-label>Número Casa</mat-label>
             <input
@@ -409,7 +408,7 @@
               required
             />
           </mat-form-field>
-  
+
           <mat-form-field appearance="outline">
             <mat-label>Email</mat-label>
             <input
@@ -419,18 +418,18 @@
               required
             />
           </mat-form-field>
-  
+
           <div>
             <button mat-button matStepperPrevious>Back</button>
             <button mat-button matStepperNext>Next</button>
           </div>
         </form>
       </mat-step>
-  
+
       <mat-step [stepControl]="horarioFormGroup">
         <form [formGroup]="horarioFormGroup">
           <ng-template matStepLabel>Seleccione la disciplina</ng-template>
-  
+
           <mat-form-field appearance="outline">
             <mat-label>Disciplina</mat-label>
             <mat-select
@@ -446,7 +445,7 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
-  
+
           <mat-form-field appearance="outline">
             <mat-label>Plan</mat-label>
             <mat-select formControlName="plan" required>
@@ -459,7 +458,7 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
-  
+
           <mat-form-field appearance="outline">
             <mat-label>Dia</mat-label>
             <mat-select matNativeControl formControlName="dia">
@@ -469,7 +468,7 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
-  
+
           <mat-form-field appearance="outline">
             <mat-label>Inicio</mat-label>
             <mat-select matNativeControl formControlName="inicio">
@@ -479,7 +478,7 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
-  
+
           <mat-form-field appearance="outline">
             <mat-label>Fin</mat-label>
             <mat-select matNativeControl formControlName="fin">
@@ -489,7 +488,7 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
-  
+
           <button mat-raised-button color="primary" (click)="agregarATabla()">
             Agregar
           </button>
@@ -497,7 +496,7 @@
             <table mat-table [dataSource]="horarioPlan" class="mat-elevation-z8">
               <!--- Note that these columns can be defined in any order.
                     The actual rendered columns are set as a property on the row definition" -->
-  
+
               <!-- Position Column -->
               <ng-container matColumnDef="disciplina">
                 <th mat-header-cell *matHeaderCellDef>disciplina.</th>
@@ -505,28 +504,28 @@
                   {{ element.disciplina }}
                 </td>
               </ng-container>
-  
+
               <!-- Name Column -->
               <ng-container matColumnDef="plan">
                 <th mat-header-cell *matHeaderCellDef>plan</th>
                 <td mat-cell *matCellDef="let element">{{ element.plan }}</td>
               </ng-container>
-  
+
               <!-- Weight Column -->
               <ng-container matColumnDef="dia">
                 <th mat-header-cell *matHeaderCellDef>dia</th>
                 <td mat-cell *matCellDef="let element">{{ element.dia }}</td>
               </ng-container>
-  
+
               <!-- Symbol Column -->
               <ng-container matColumnDef="inicio">
                 <th mat-header-cell *matHeaderCellDef>inicio</th>
                 <td mat-cell *matCellDef="let element">{{ element.inicio }}</td>
               </ng-container>
-  
+
               <ng-container matColumnDef="acciones">
                 <th mat-header-cell *matHeaderCellDef>Eliminar</th>
-  
+
                 <td mat-cell *matCellDef="let element">
                   <button
                     mat-icon-button
@@ -538,19 +537,19 @@
                   </button>
                 </td>
               </ng-container>
-  
+
               <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
               <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
             </table>
           </div>
-  
+
           <div>
             <button mat-button matStepperPrevious>Back</button>
             <button mat-button matStepperNext>Next</button>
           </div>
         </form>
       </mat-step>
-  
+
       <mat-step>
         <ng-template matStepLabel>Done</ng-template>
         You are now done.
@@ -562,4 +561,3 @@
       </mat-step>
     </mat-vertical-stepper>
   </div>
-  

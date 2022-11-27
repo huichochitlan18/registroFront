@@ -6,6 +6,7 @@ export interface UsuarioInformacion {
     informacionContacto:           InformacionContacto;
     informacionContactoEmergencia: InformacionContactoEmergencia[];
     inscripcion:                   Inscripcion[];
+    pagos?:                        Pago[];
 }
 
 export interface InformacionContacto {
@@ -72,6 +73,17 @@ export interface Plan {
 export interface Disciplina {
     id:         number;
     disciplina: string;
+}
+export interface Pago {
+  id?:            number;
+  referencia:    string;
+  monto:         string;
+  cuentaDestino: string;
+  formaPago:     string;
+  conceptoPago:  string;
+  observaciones: string;
+  fechaPago:     Date;
+  fechaRegistro?: Date;
 }
 
 export interface Usuario {

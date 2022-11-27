@@ -11,8 +11,8 @@ import { AuthService } from '../../../service/auth.service';
 })
 export class LoginComponent implements OnInit {
   loginFormulario: FormGroup = this._formBuilder.group({
-    correo: ['cvx@xcv.com', Validators.email],
-    contrasena: ['asdfg', Validators.minLength(5)],
+    correo: ['admin@admin.com', Validators.email],
+    contrasena: ['17140200', Validators.minLength(5)],
   });
   constructor(
     private _formBuilder: FormBuilder,

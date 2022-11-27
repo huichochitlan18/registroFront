@@ -1,0 +1,77 @@
+<div *ngIf="informacionAlumno">
+  <p>Nombre {{informacionAlumno.usuario.nombre }}</p>
+  <p>Curp {{informacionAlumno.informacionPersonal.curp }}</p>
+  <p>folio {{informacionAlumno.informacionPersonal.folio }}</p>
+  <div>
+    <form [formGroup]="registrarPago" (ngSubmit)="agregarPago()">
+      <mat-form-field appearance="outline">
+        <mat-label>referencia</mat-label>
+        <input matInput placeholder="referencia" formControlName="referencia" required />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>monto</mat-label>
+        <input matInput placeholder="monto" formControlName="monto" required />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>cuentaDestino</mat-label>
+        <input matInput placeholder="cuentaDestino" formControlName="cuentaDestino" required />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>formaPago</mat-label>
+        <input matInput placeholder="formaPago" formControlName="formaPago" required />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>conceptoPago</mat-label>
+        <input matInput placeholder="conceptoPago" formControlName="conceptoPago" required />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>observaciones</mat-label>
+        <input matInput placeholder="observaciones" formControlName="observaciones" required />
+      </mat-form-field>
+
+
+
+      <mat-form-field appearance="outline">
+        <mat-label>fechaPago</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="fechaPago" required />
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+
+      <button mat-raised-button color="primary" type="submit" [disabled]="registrarPago.invalid">Agregar pago</button>
+    </form>
+  </div>
+
+  <div>
+    <button mat-raised-button color="primary" type="button" (click)="descargarDocumentoInscripcion()">Descargar
+      documento</button>
+    <!-- <button (click)="descargarDocumentoInscripcion()"> test </button> -->
+  </div>
+  <table>
+    <thead>
+      <th>referencia</th>
+      <th>monto</th>
+      <th>cuentaDestino</th>
+      <th>formaPago</th>
+      <th>conceptoPago</th>
+      <th>observaciones</th>
+      <th>fechaPago</th>
+      <th>fechaRegistro</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of informacionAlumno.pagos">
+        <td>{{item.referencia}}</td>
+        <td>{{item.monto}}</td>
+        <td>{{item.cuentaDestino}}</td>
+        <td>{{item.formaPago}}</td>
+        <td>{{item.conceptoPago}}</td>
+        <td>{{item.observaciones}}</td>
+        <td>{{item.fechaPago}}</td>
+        <td>{{item.fechaRegistro}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
