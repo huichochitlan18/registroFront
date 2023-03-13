@@ -27,6 +27,17 @@ export class HomeComponent implements OnInit {
       link: './lista-alumnos',
       color: '#ff7f0e',
     },
+    {
+      title: 'Registrar entradas',
+      icon: 'list',
+      link: './entradas',
+      color: '#ff7f0e',
+    },{
+      title: 'Registrar salidas',
+      icon: 'list',
+      link: './salidas',
+      color: '#ff7f0e',
+    },
     // {
     //   title: 'Statistics',
     //   icon: 'bar_chart',

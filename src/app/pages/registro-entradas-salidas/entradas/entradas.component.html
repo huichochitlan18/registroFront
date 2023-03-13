@@ -1,0 +1,8 @@
+<select matNativeControl matInput (change)="onDeviceSelectChange($any($event).target.value)">
+  <option value="" [selected]="!currentDevice">No Device Selected</option>
+  <option *ngFor="let device of availableDevices" [value]="device.deviceId"
+    [selected]="currentDevice && device.deviceId === currentDevice.deviceId">{{device.label}}</option>
+</select>
+
+<zxing-scanner #scanner (camerasFound)="cameraFound($event)" (scanSuccess)="onCodeResult($event)"
+  (camerasNotFound)="camerasNotFound($event)" style="height: 500px; width: 700px;"></zxing-scanner>

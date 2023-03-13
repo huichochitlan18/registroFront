@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { Pago, UsuarioInformacion } from '../../../interface/usuario.interface';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-usuario',
@@ -13,7 +14,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class UsuarioComponent implements OnInit {
   informacionAlumno!: UsuarioInformacion;
   pago!: Pago;
-
+  qr!:string;
+  qrCodeDownloadLink: SafeUrl = "";
   registrarPago: FormGroup = this._formBuilder.group({
     referencia: ['xcvbxcvb', Validators.required],
     monto: ['234234', Validators.required],
@@ -40,6 +42,7 @@ export class UsuarioComponent implements OnInit {
       .pipe(switchMap(({ id }) => this._usuarioService.informacionAlumno(id)))
       .subscribe((respuesta) => {
         this.informacionAlumno = respuesta;
+        this.qr = this.informacionAlumno.usuario.id;
         console.log(this.informacionAlumno);
       });
   }
@@ -69,6 +72,10 @@ export class UsuarioComponent implements OnInit {
       link.click();
       // console.log(x)
     })
+  }
+  onChangeURL(url: SafeUrl) {
+    console.log(url);
+    this.qrCodeDownloadLink = url;
   }
 
 

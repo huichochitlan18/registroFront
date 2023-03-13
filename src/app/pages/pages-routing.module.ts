@@ -5,6 +5,8 @@ import { HomeComponent } from './home/home.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ListaComponent } from './usuario/lista/lista.component';
 import { UsuarioComponent } from './usuario/usuario/usuario.component';
+import { EntradasComponent } from './registro-entradas-salidas/entradas/entradas.component';
+import { SalidasComponent } from './registro-entradas-salidas/salidas/salidas.component';
 
 const routes: Routes = [
   {
@@ -15,6 +17,8 @@ const routes: Routes = [
       { path: 'agregar-alumno', component: AgregarComponent },
       { path: 'lista-alumnos', component: ListaComponent },
       { path: 'dashboard', component: DashboardComponent },
+      { path: 'entradas', component: EntradasComponent },
+      { path: 'salidas', component: SalidasComponent },
       { path: '**', redirectTo: 'dashboard' },
     ],
   },

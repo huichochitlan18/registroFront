@@ -29,6 +29,10 @@ export class UsuarioService {
   agregarPago(pago: Pago) {
     return this.http.post<Pago>(`${this.backEnd}/usuarios/pago/`, pago);
   }
+  registrarEntradaSalida(entrada: any) {
+    return this.http.post<any>(`${this.backEnd}/usuarios/entrada-salida/`, entrada);
+  }
+
   descargarDocumentoInscripcion(id: string) {
     const httpOptions = {
       responseType: 'blob' as 'json'

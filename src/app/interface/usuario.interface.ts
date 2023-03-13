@@ -7,6 +7,7 @@ export interface UsuarioInformacion {
     informacionContactoEmergencia: InformacionContactoEmergencia[];
     inscripcion:                   Inscripcion[];
     pagos?:                        Pago[];
+    reigstroEntradasSalidas?:       ReigstroEntradasSalida[];
 }
 
 export interface InformacionContacto {
@@ -84,6 +85,11 @@ export interface Pago {
   observaciones: string;
   fechaPago:     Date;
   fechaRegistro?: Date;
+}
+export interface ReigstroEntradasSalida {
+  id:    number;
+  tipo:  string;
+  fecha: Date;
 }
 
 export interface Usuario {

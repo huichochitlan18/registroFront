@@ -75,3 +75,5 @@
     </tbody>
   </table>
 </div>
+<qrcode (qrCodeURL)="onChangeURL($event)" [qrdata]="qr" [elementType]="'svg'" [width]="350" [errorCorrectionLevel]="'M'"></qrcode>
+<a [href]="qrCodeDownloadLink" download="qrcode">Download</a>
