@@ -1,0 +1,15 @@
+<mat-form-field appearance="fill" class="full-width ">
+  <mat-label>Camaras</mat-label>
+  <mat-select (valueChange)="cambiarCamara($any($event))">
+    <mat-option *ngFor="let device of camarasDisponibles" [value]="device.deviceId">{{device.label}}</mat-option>
+  </mat-select>
+</mat-form-field>
+
+<webcam [height]="500" [width]="500" [imageQuality]="1" [trigger]="triggerObservable"
+  (imageCapture)="handleImage($event)" *ngIf="showWebcam" [allowCameraSwitch]="allowCameraSwitch"
+  [switchCamera]="nextWebcamObservable" [videoOptions]="videoOptions" [imageQuality]="1"
+  (cameraSwitched)="cameraWasSwitched($event)" (initError)="handleInitError($event)"></webcam>
+<button class="actionBtn" (click)="triggerSnapshot();">Take A Snapshot</button>
+<div *ngIf="webcamImage">
+  <img [src]="webcamImage.imageAsDataUrl" />
+</div>

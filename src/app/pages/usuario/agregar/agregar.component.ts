@@ -13,8 +13,9 @@ import { CodigoPostalService } from '../../../service/cp.service';
 import { UsuarioService } from '../../../service/usuario.service';
 import { CatalogosService } from '../../../service/catalogo.service';
 import * as uuid from 'uuid';//solo para generar un id unico para poder eliminar los datos de la tabla del horario
-import { catchError, EMPTY } from 'rxjs';
-
+import { catchError, EMPTY, Observable, Subject } from 'rxjs';
+import { WebcamImage, WebcamInitError, WebcamUtil } from 'ngx-webcam';
+import { DomSanitizer } from '@angular/platform-browser';
 @Component({
   selector: 'app-agregar',
   templateUrl: './agregar.component.html',
@@ -32,6 +33,24 @@ export class AgregarComponent implements OnInit {
     'inicio',
     'acciones',
   ];
+  //camara
+  private trigger: Subject<void> = new Subject<void>();
+  // latest snapshot
+  public webcamImage!: WebcamImage;
+  public allowCameraSwitch = true;
+  public showWebcam = true;
+  private nextWebcam: Subject<boolean | string> = new Subject<boolean | string>();
+  public videoOptions: MediaTrackConstraints = {
+    // width: {ideal: 1024},
+    // height: {ideal: 576}
+  };
+  public multipleWebcamsAvailable = false;
+  public deviceId!: string;
+  public errors: WebcamInitError[] = [];
+  public camarasDisponibles: MediaDeviceInfo[] = [];
+  // switch to next / previous / specific webcam; true/false: forward/backwards, string: deviceId
+  // private nextWebcam: Subject<boolean | string> = new Subject<boolean | string>();
+  //fin camara
 
   horarioPlan: usuarioHorario[] = []; //para motrar los datos en la tabla de la vista
   horarioPlanForm: usuarioHorarioFormulario[] = []; //los datos q se envian en el formulario
@@ -45,7 +64,9 @@ export class AgregarComponent implements OnInit {
 
   catalogoCP: cp[] = [];
   catalogoCPFiltro: cp[] = [];
-
+  fotoPerfil!: File;
+  fotoProducto!: File;
+  imagen!: any;
   horario = [
     '7:00',
     '8:00',
@@ -110,6 +131,7 @@ export class AgregarComponent implements OnInit {
     nombre: ['jose', Validators.required],
     apellidoPaterno: ['gonzalez', Validators.required],
     apellidoMaterno: ['gonzalez', Validators.required],
+    imgPerfil: ['']
     // fechaNacimiento: [new Date(), Validators.required],
     // sexo: ['', Validators.required],
     // curp: ['asdfasdfasdf', Validators.required],
@@ -166,8 +188,17 @@ export class AgregarComponent implements OnInit {
     informacionMedica: [this.datosMedicosFormGroup.value],
     informacionContacto: [this.datosContactoFormGroup.value],
     informacionContactoEmergencia: [this._formBuilder.array([])],
-    horario: [this._formBuilder.array([])],
+    horario: [this._formBuilder.array([])]
   });
+
+  // datosFormGroup = this._formBuilder.group({
+  //   usuario: [this.usuarioFormGroup],
+  //   informacionPersonal: [this.usuarioInformacionPersonalFormGroup],
+  //   informacionMedica: [this.datosMedicosFormGroup.value],
+  //   informacionContacto: [this.datosContactoFormGroup.value],
+  //   informacionContactoEmergencia: [this._formBuilder.array([])],
+  //   horario: [this._formBuilder.array([])],
+  // });
 
   isEditable = false;
 
@@ -176,10 +207,17 @@ export class AgregarComponent implements OnInit {
     // private _usuarioSocialNetworkService: UsuarioSocialNetworkService,
     private _codigoPostalService: CodigoPostalService,
     private _usuarioService: UsuarioService,
-    private _catalogosService: CatalogosService
+    private _catalogosService: CatalogosService,
+    private _sanitizer: DomSanitizer
   ) { }
 
   ngOnInit(): void {
+    WebcamUtil.getAvailableVideoInputs()
+      .then((mediaDevices: MediaDeviceInfo[]) => {
+        console.log(mediaDevices);
+        this.camarasDisponibles = mediaDevices;
+        this.multipleWebcamsAvailable = mediaDevices && mediaDevices.length > 1;
+      });
     this.listaAfiliacionMedica();
     this.listaDisciplina();
   }
@@ -207,6 +245,7 @@ export class AgregarComponent implements OnInit {
   }
 
   crearUsuario() {
+    this.usuarioFormGroup.patchValue({imgPerfil:this.imagen});
     this.datosFormGroup.get('usuario')?.patchValue(this.usuarioFormGroup.value);
 
     this.datosFormGroup
@@ -258,11 +297,14 @@ export class AgregarComponent implements OnInit {
       ?.patchValue(this.contacosEmergencia);
 
     this.datosFormGroup.get('horario')?.patchValue(this.horarioPlanForm);
+    // this.imagenPerfilFormGroup.get('imagen')?.patchValue(this.imagen);
+    // this.datosFormGroup.get('imagenPerfil')?.patchValue(this.imagenPerfilFormGroup.value);
+    console.log(this.datosFormGroup.value);
 
     this._usuarioService
       .registrar(this.datosFormGroup.value)
       .subscribe((respuesta: any) => {
-        console.log(respuesta);
+        // console.log(respuesta);
         if (respuesta.datosMedicos) {
           // this._usuarioRegistro.descargarDocumento().subscribe((respuesta)=>{
           //   const blob = new Blob([respuesta], { type: 'docx' });
@@ -314,9 +356,9 @@ export class AgregarComponent implements OnInit {
     );
     // }
   }
-  
+
   listaAfiliacionMedica() {
-  
+
     this._catalogosService
       .afiliacionMedica()
       .pipe(
@@ -387,5 +429,58 @@ export class AgregarComponent implements OnInit {
     // console.log(this.horarioInscripcion);
     this.table.renderRows();
   }
+  //camara
+  public get triggerObservable(): Observable<void> {
+    return this.trigger.asObservable();
+  }
+  public handleImage(webcamImage: WebcamImage): void {
+    // console.info('received webcam image', webcamImage);
+    this.webcamImage = webcamImage;
+  }
+  public get nextWebcamObservable(): Observable<boolean | string> {
+    return this.nextWebcam.asObservable();
+  }
+  public cameraWasSwitched(deviceId: string): void {
+    console.log('active device: ' + deviceId);
+    this.deviceId = deviceId;
+  }
+  public handleInitError(error: WebcamInitError): void {
+    this.errors.push(error);
+  }
+  cambiarCamara(selectedValue: any) {
+    console.log(selectedValue);
+    this.deviceId = selectedValue;
+    this.nextWebcam.next(selectedValue);
+  }
+  public triggerSnapshot(): void {
+    this.trigger.next();
+    this.foto();
+  }
+  foto() {
+    // console.log(this.webcamImage);
+    const imageDataUrl = this.webcamImage.imageAsDataUrl;
+    const imageBlob = this.dataURItoBlob(imageDataUrl);
+    // console.log(imageBlob);
+    const formData = new FormData();
+    formData.append('file', imageBlob);
 
+    // Crear un objeto FormData y agregar la imagen capturada
+    this._usuarioService.subirImagenPerfil(formData).subscribe((x: any) => {
+      console.log(x);
+      this.imagen = x.secureUrl;
+
+    })
+  }
+  private dataURItoBlob(dataURI: string): File {
+    const byteString = window.atob(dataURI.split(',')[1]);
+    const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+    const ab = new ArrayBuffer(byteString.length);
+    const ia = new Uint8Array(ab);
+    for (let i = 0; i < byteString.length; i++) {
+      ia[i] = byteString.charCodeAt(i);
+    }
+    return new File([ab], 'profileImage.jpg', { type: mimeString });
+  }
+
+  //fin camara
 }

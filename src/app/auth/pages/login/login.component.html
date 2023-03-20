@@ -1,18 +1,20 @@
-<div class="loaderTexto">
-  <form [formGroup]="loginFormulario" (ngSubmit)="login()">
-    <mat-form-field appearance="outline">
-      <mat-label>Correo</mat-label>
-      <input matInput placeholder="correo" formControlName="correo" required />
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-      <mat-label>Contrasena</mat-label>
-      <input
-        matInput
-        placeholder="contrasena"
-        formControlName="contrasena"
-        required
-      />
-    </mat-form-field>
-    <button mat-raised-button color="primary" type="submit" [disabled]="loginFormulario.invalid">Iniciar</button>
+<div class="d-flex align-items-center justify-content-center" style="height: 100vh;">
+  <form [formGroup]="loginFormulario" (ngSubmit)="login()" class="border p-4">
+    <div class="">
+      <mat-form-field appearance="outline">
+        <mat-label>Correo</mat-label>
+        <input matInput placeholder="correo" formControlName="correo" required />
+      </mat-form-field>
+    </div>
+
+    <div class="">
+      <mat-form-field appearance="outline">
+        <mat-label>Contrasena</mat-label>
+        <input matInput placeholder="contrasena" formControlName="contrasena" required />
+      </mat-form-field>
+    </div>
+
+    <button mat-raised-button color="primary" type="submit" class="full-width"
+      [disabled]="loginFormulario.invalid">Iniciar</button>
   </form>
 </div>

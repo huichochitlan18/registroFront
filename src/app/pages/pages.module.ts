@@ -14,16 +14,19 @@ import { UsuarioComponent } from './usuario/usuario/usuario.component';
 import { EntradasComponent } from './registro-entradas-salidas/entradas/entradas.component';
 import { SalidasComponent } from './registro-entradas-salidas/salidas/salidas.component';
 import { QRCodeModule } from 'angularx-qrcode';
+import { WebcamModule } from 'ngx-webcam';
+import { CamaraComponent } from './test/camara/camara.component';
 
 @NgModule({
-  declarations: [HomeComponent, MenuComponent, AgregarComponent, DashboardComponent, ListaComponent, UsuarioComponent, EntradasComponent, SalidasComponent],
+  declarations: [HomeComponent, MenuComponent, AgregarComponent, DashboardComponent, ListaComponent, UsuarioComponent, EntradasComponent, SalidasComponent, CamaraComponent],
   imports: [
     CommonModule,
     PagesRoutingModule,
     ZXingScannerModule,
     MaterialModule,
     QRCodeModule,
-    // FormsModule,
+    WebcamModule,
+    FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
   ],

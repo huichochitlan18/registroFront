@@ -14,7 +14,7 @@ export class UsuarioService {
   constructor(private http: HttpClient) { }
 
   registrar(data: any): Observable<any> {
-    console.log(data);
+    // console.log(data);
     return this.http.post<any>(
       `${this.backEnd}/usuarios/registrar-alumno`,
       data
@@ -43,4 +43,8 @@ export class UsuarioService {
   // descargarDocumento(): Observable<any>{
   //   return this.http.get<any>(`${this.backEnd}/usuarios/documento` {responseType: 'blob'});
   // }
+  subirImagenPerfil(imagen:any){
+    // console.log(imagen);
+    return this.http.post(`${this.backEnd}/files/foto-usuario/`, imagen);
+  }
 }

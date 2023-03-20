@@ -25,6 +25,7 @@
     "@zxing/ngx-scanner": "^3.6.2",
     "angularx-qrcode": "^14.0.0",
     "moment": "^2.29.4",
+    "ngx-webcam": "^0.4.1",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "uuid": "^9.0.0",

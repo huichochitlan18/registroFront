@@ -1,8 +1,40 @@
-<select matNativeControl matInput (change)="onDeviceSelectChange($any($event).target.value)">
-  <option value="" [selected]="!currentDevice">No Device Selected</option>
-  <option *ngFor="let device of availableDevices" [value]="device.deviceId"
-    [selected]="currentDevice && device.deviceId === currentDevice.deviceId">{{device.label}}</option>
-</select>
+<div class="row">
+  <div class="col">
+    <mat-form-field appearance="fill" class="full-width ">
+      <mat-label>Camaras</mat-label>
+      <mat-select (valueChange)="onDeviceSelectChange($any($event))">
+        <mat-option *ngFor="let device of availableDevices" [value]="device.deviceId">{{device.label}}</mat-option>
+      </mat-select>
+    </mat-form-field>
 
-<zxing-scanner #scanner (camerasFound)="cameraFound($event)" (scanSuccess)="onCodeResult($event)"
-  (camerasNotFound)="camerasNotFound($event)" style="height: 500px; width: 700px;"></zxing-scanner>
+    <ng-template [ngIf]="acceso==true">
+      <div class="d-flex align-items-center justify-content-center" >
+        <div class="row">
+          <!-- <h1 style="color:#388e3c; font-size: 40px;font-weight: bold;">Bienvenido</h1> -->
+          <h1 style="color:#388e3c; font-size: 40px;">{{alumno.usuario.nombre}}</h1>
+        </div>
+      </div>
+
+    </ng-template>
+    <ng-template [ngIf]="acceso==false">
+      <div class="d-flex align-items-center justify-content-center" >
+        <div class="row">
+
+          <div class="col-12">
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <mat-icon class="icon-display" color="warn">close</mat-icon>
+          </div>
+        </div>
+      </div>
+
+    </ng-template>
+  </div>
+  <div class="col">
+    <zxing-scanner #scanner (camerasFound)="cameraFound($event)" (scanSuccess)="onCodeResult($event)"
+      (camerasNotFound)="camerasNotFound($event)"></zxing-scanner>
+  </div>
+</div>

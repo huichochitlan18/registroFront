@@ -19,7 +19,7 @@
   </mat-sidenav>
 
   <mat-sidenav-container>
-    <mat-toolbar color="primary" class="position-fixed mat-elevation-z6">
+    <mat-toolbar class="mat-toolbar-fixed toolbar mat-elevation-z6 ">
       <button mat-icon-button (click)="sidenav.toggle()">
         <mat-icon>menu</mat-icon>
       </button>
@@ -41,6 +41,8 @@
                 <mat-icon>share</mat-icon>
             </button> -->
     </mat-toolbar>
-    <router-outlet></router-outlet>
+    <div class="container-fluid main-content">
+      <router-outlet></router-outlet>
+    </div>
   </mat-sidenav-container>
 </mat-sidenav-container>

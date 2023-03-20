@@ -1,4 +1,89 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.perfil-img {
+  border-radius: 50%;
+}
+
+* {
+  text-shadow: 0px 0px 3px rgba(0, 0, 0, 0);
+}
+
+// toolbar
+.toolbar {
+  background-color: rgba(255, 255, 255, 0.253);
+  backdrop-filter: blur(15px);
+  color: rgb(32, 32, 32);
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.grid-container {
+  display: flex;
+  flex-direction: row;
+  /* Dirección horizontal, cambiar a column para dirección vertical */
+}
+
+.grid-column {
+  display: flex;
+  flex-direction: column;
+  /* Dirección horizontal, cambiar a column para dirección vertical */
+}
+
+.grid-container .grid-item {
+  flex-basis: 33.33%;
+  margin: 10px;
+  padding: 10px;
+}
+
+.mat-form-field {
+  padding: 5px;
+}
+
+table {
+  width: 100%;
+}
+
+.container {
+  margin: 5px;
+}
+
+.menu {
+  width: 280px;
+}
+
+.mat-toolbar-fixed {
+  position: fixed;
+  /* top: 0; */
+  /* left: 0; */
+  /* right: 0; */
+  z-index: 1;
+}
+
+.main-content {
+  margin-top: 70px;
+  /* 64px es la altura predeterminada del toolbar de Angular Material */
+}
+
+.full-width {
+  width: 100%;
+}
+
+.icon-display {
+  // font-size: 50px;
+  // height: 50px ;
+  // width: 50px ;
+  transform: scale(10);
+  // font-size: 50px;
+}

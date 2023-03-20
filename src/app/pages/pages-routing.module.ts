@@ -7,6 +7,7 @@ import { ListaComponent } from './usuario/lista/lista.component';
 import { UsuarioComponent } from './usuario/usuario/usuario.component';
 import { EntradasComponent } from './registro-entradas-salidas/entradas/entradas.component';
 import { SalidasComponent } from './registro-entradas-salidas/salidas/salidas.component';
+import { CamaraComponent } from './test/camara/camara.component';
 
 const routes: Routes = [
   {
@@ -19,6 +20,7 @@ const routes: Routes = [
       { path: 'dashboard', component: DashboardComponent },
       { path: 'entradas', component: EntradasComponent },
       { path: 'salidas', component: SalidasComponent },
+      { path: 'test/camara', component: CamaraComponent },
       { path: '**', redirectTo: 'dashboard' },
     ],
   },
