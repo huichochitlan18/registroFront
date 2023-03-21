@@ -1,79 +1,110 @@
-<div *ngIf="informacionAlumno">
-  <p>Nombre {{informacionAlumno.usuario.nombre }}</p>
-  <p>Curp {{informacionAlumno.informacionPersonal.curp }}</p>
-  <p>folio {{informacionAlumno.informacionPersonal.folio }}</p>
-  <div>
-    <form [formGroup]="registrarPago" (ngSubmit)="agregarPago()">
-      <mat-form-field appearance="outline">
-        <mat-label>referencia</mat-label>
-        <input matInput placeholder="referencia" formControlName="referencia" required />
-      </mat-form-field>
+<div *ngIf="informacionAlumno" class=" container-xl">
+  <div class="row">
+    <div class="col-3">
+      <br>
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title> Información</mat-card-title>
+          <mat-card-subtitle>{{ informacionAlumno.usuario.rol }}</mat-card-subtitle>
+        </mat-card-header>
+        <img [src]="srcImg+informacionAlumno.usuario.imgPerfil" alt="Imagen de perfil" class="img-fluid">
+        <div class="card-body text-center">
+          <p class="">
+            {{informacionAlumno.usuario.nombre | titlecase}}
+            {{informacionAlumno.usuario.apellidoPaterno |
+            titlecase}} {{informacionAlumno.usuario.apellidoMaterno |
+            titlecase}}
+          </p>
+          <p>CURP: {{informacionAlumno.informacionPersonal.curp | uppercase}}</p>
+          <p>Folio: {{informacionAlumno.informacionPersonal.folio }}</p>
+          <qrcode (qrCodeURL)="onChangeURL($event)" [qrdata]="qr" [elementType]="'svg'" [width]="250"
+            [errorCorrectionLevel]="'M'"></qrcode>
+          <a mat-raised-button color="primary"  [href]="qrCodeDownloadLink" download="qrcode">Download QR</a>
 
-      <mat-form-field appearance="outline">
-        <mat-label>monto</mat-label>
-        <input matInput placeholder="monto" formControlName="monto" required />
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>cuentaDestino</mat-label>
-        <input matInput placeholder="cuentaDestino" formControlName="cuentaDestino" required />
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>formaPago</mat-label>
-        <input matInput placeholder="formaPago" formControlName="formaPago" required />
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>conceptoPago</mat-label>
-        <input matInput placeholder="conceptoPago" formControlName="conceptoPago" required />
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>observaciones</mat-label>
-        <input matInput placeholder="observaciones" formControlName="observaciones" required />
-      </mat-form-field>
+          <button mat-raised-button color="primary" type="button" (click)="descargarDocumentoInscripcion()">Descargar
+            documento</button>
+        </div>
+        <!-- <mat-card-actions>
+          <button mat-button>LIKE</button>
+          <button mat-button>SHARE</button>
+        </mat-card-actions> -->
+      </mat-card>
+
+    </div>
+    <div class="col-9">
+      <mat-tab-group animationDuration="0ms">
+        <mat-tab label="Pagos">
+          <div>
+            <form [formGroup]="registrarPago" (ngSubmit)="agregarPago()">
+              <mat-form-field appearance="outline">
+                <mat-label>referencia</mat-label>
+                <input matInput placeholder="referencia" formControlName="referencia" required />
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>monto</mat-label>
+                <input matInput placeholder="monto" formControlName="monto" required />
+              </mat-form-field>
+              <mat-form-field appearance="outline">
+                <mat-label>cuentaDestino</mat-label>
+                <input matInput placeholder="cuentaDestino" formControlName="cuentaDestino" required />
+              </mat-form-field>
+              <mat-form-field appearance="outline">
+                <mat-label>formaPago</mat-label>
+                <input matInput placeholder="formaPago" formControlName="formaPago" required />
+              </mat-form-field>
+              <mat-form-field appearance="outline">
+                <mat-label>conceptoPago</mat-label>
+                <input matInput placeholder="conceptoPago" formControlName="conceptoPago" required />
+              </mat-form-field>
+              <mat-form-field appearance="outline">
+                <mat-label>observaciones</mat-label>
+                <input matInput placeholder="observaciones" formControlName="observaciones" required />
+              </mat-form-field>
 
 
 
-      <mat-form-field appearance="outline">
-        <mat-label>fechaPago</mat-label>
-        <input matInput [matDatepicker]="picker" formControlName="fechaPago" required />
-        <mat-hint>MM/DD/YYYY</mat-hint>
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-      </mat-form-field>
+              <mat-form-field appearance="outline">
+                <mat-label>fechaPago</mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="fechaPago" required />
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
 
 
-      <button mat-raised-button color="primary" type="submit" [disabled]="registrarPago.invalid">Agregar pago</button>
-    </form>
+              <button mat-raised-button color="primary" type="submit" [disabled]="registrarPago.invalid">Agregar
+                pago</button>
+            </form>
+          </div>
+          <table>
+            <thead>
+              <th>referencia</th>
+              <th>monto</th>
+              <th>cuentaDestino</th>
+              <th>formaPago</th>
+              <th>conceptoPago</th>
+              <th>observaciones</th>
+              <th>fechaPago</th>
+              <th>fechaRegistro</th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of informacionAlumno.pagos">
+                <td>{{item.referencia}}</td>
+                <td>{{item.monto}}</td>
+                <td>{{item.cuentaDestino}}</td>
+                <td>{{item.formaPago}}</td>
+                <td>{{item.conceptoPago}}</td>
+                <td>{{item.observaciones}}</td>
+                <td>{{item.fechaPago}}</td>
+                <td>{{item.fechaRegistro}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </mat-tab>
+        <mat-tab label="Horario">Content 2</mat-tab>
+        <!-- <mat-tab label="Third">Content 3</mat-tab> -->
+      </mat-tab-group>
+    </div>
   </div>
-
-  <div>
-    <button mat-raised-button color="primary" type="button" (click)="descargarDocumentoInscripcion()">Descargar
-      documento</button>
-    <!-- <button (click)="descargarDocumentoInscripcion()"> test </button> -->
-  </div>
-  <table>
-    <thead>
-      <th>referencia</th>
-      <th>monto</th>
-      <th>cuentaDestino</th>
-      <th>formaPago</th>
-      <th>conceptoPago</th>
-      <th>observaciones</th>
-      <th>fechaPago</th>
-      <th>fechaRegistro</th>
-    </thead>
-    <tbody>
-      <tr *ngFor="let item of informacionAlumno.pagos">
-        <td>{{item.referencia}}</td>
-        <td>{{item.monto}}</td>
-        <td>{{item.cuentaDestino}}</td>
-        <td>{{item.formaPago}}</td>
-        <td>{{item.conceptoPago}}</td>
-        <td>{{item.observaciones}}</td>
-        <td>{{item.fechaPago}}</td>
-        <td>{{item.fechaRegistro}}</td>
-      </tr>
-    </tbody>
-  </table>
 </div>
-<qrcode (qrCodeURL)="onChangeURL($event)" [qrdata]="qr" [elementType]="'svg'" [width]="350" [errorCorrectionLevel]="'M'"></qrcode>
-<a [href]="qrCodeDownloadLink" download="qrcode">Download</a>

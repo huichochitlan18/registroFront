@@ -5,6 +5,7 @@ import { switchMap } from 'rxjs/operators';
 import { Pago, UsuarioInformacion } from '../../../interface/usuario.interface';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SafeUrl } from '@angular/platform-browser';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-usuario',
@@ -12,9 +13,13 @@ import { SafeUrl } from '@angular/platform-browser';
   styleUrls: ['./usuario.component.scss']
 })
 export class UsuarioComponent implements OnInit {
+
+  backEnd: string = environment.apiBackEnd;
+  rutaImg: string = '/files/foto-usuario/';
+  srcImg = `${this.backEnd}${this.rutaImg}`;
   informacionAlumno!: UsuarioInformacion;
   pago!: Pago;
-  qr!:string;
+  qr!: string;
   qrCodeDownloadLink: SafeUrl = "";
   registrarPago: FormGroup = this._formBuilder.group({
     referencia: ['xcvbxcvb', Validators.required],
