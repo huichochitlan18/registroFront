@@ -7,7 +7,7 @@ export interface UsuarioInformacion {
     informacionContactoEmergencia: InformacionContactoEmergencia[];
     inscripcion:                   Inscripcion[];
     pagos?:                        Pago[];
-    reigstroEntradasSalidas?:       ReigstroEntradasSalida[];
+    reigstroEntradasSalidas?:      ReigstroEntradasSalida[];
 }
 
 export interface InformacionContacto {

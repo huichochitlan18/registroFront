@@ -1,0 +1,54 @@
+<div class="row">
+  <div class="col-12">
+    <form [formGroup]="qrFormGroup" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>QR</mat-label>
+        <input
+          matInput
+          placeholder="Placeholder"
+          formControlName="qr"
+          [autofocus]="true"
+        />
+      </mat-form-field>
+    </form>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col">
+    
+
+    <ng-template [ngIf]="acceso == true">
+      <div class="d-flex align-items-center justify-content-center">
+        <div class="row">
+          <!-- <h1 style="color:#388e3c; font-size: 40px;font-weight: bold;">Bienvenido</h1> -->
+          <h1 style="color: #388e3c; font-size: 40px">
+            {{ alumno?.usuario?.nombre }} {{ alumno?.usuario?.apellidoPaterno }}
+          </h1>
+        </div>
+      </div>
+    </ng-template>
+    <ng-template [ngIf]="acceso == false">
+      <div class="d-flex align-items-center justify-content-center">
+        <div class="row">
+          <div class="col-12">
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <mat-icon class="icon-display" color="warn">close</mat-icon>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+  <div class="col">
+    
+  </div>
+</div>

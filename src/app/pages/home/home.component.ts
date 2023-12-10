@@ -28,6 +28,12 @@ export class HomeComponent implements OnInit {
       color: '#ff7f0e',
     },
     {
+      title: 'Lista Entradas-Salidas',
+      icon: 'list',
+      link: './entradas-salidas',
+      color: '#ff7f0e',
+    },
+    {
       title: 'Registrar entradas',
       icon: 'list',
       link: './entradas',
@@ -36,6 +42,18 @@ export class HomeComponent implements OnInit {
       title: 'Registrar salidas',
       icon: 'list',
       link: './salidas',
+      color: '#ff7f0e',
+    },
+    {
+      title: 'Registrar entradas QR',
+      icon: 'list',
+      link: './entradasQR',
+      color: '#ff7f0e',
+    }
+    ,{
+      title: 'Registrar salidas QR',
+      icon: 'list',
+      link: './salidasQR',
       color: '#ff7f0e',
     },
     // {

@@ -1,0 +1,34 @@
+<div class="container-fluid">
+    <table mat-table [dataSource]="registros" class="mat-elevation-z8">
+      <!--- Note that these columns can be defined in any order.
+              The actual rendered columns are set as a property on the row definition" -->
+  
+      <ng-container matColumnDef="usuario">
+        <th mat-header-cell *matHeaderCellDef>Nombre</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.usuarioPerfil.usuario.nombre }} {{element.usuarioPerfil.usuario.apellidoPaterno }} {{ element.usuarioPerfil.usuario.apellidoMaterno }}          
+        </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="hora">
+        <th mat-header-cell *matHeaderCellDef>Hora</th>
+        <td mat-cell *matCellDef="let element">
+            <!-- formato de 12 horas, seguro no falta el marica que diga q mejor mostrar en 12 hpras -->
+            <!-- {{ element.fecha | date:'hh:mm a'}} -->
+            {{ element.fecha | date:"HH:mm' - 'MMM dd, yyyy" }}
+        </td>
+      </ng-container>
+  
+  
+      <ng-container matColumnDef="tipo">
+        <th mat-header-cell *matHeaderCellDef>Tipo</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.tipo }}
+        </td>
+      </ng-container>
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </div>
+  
